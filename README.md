@@ -33,8 +33,9 @@ Make release branch and follow the deploy process.
 1. Update version
 
 ```bash
-$ bundle exec fastlane run increment_version_number version_number:0.0.0
-$ bundle exec fastlane run increment_build_number
+$ bundle exec fastlane bump_version
+# or
+$ bundle exec fastlane bump_version bump_type:[minor|major]
 # and commit changes
 ```
 

@@ -17,28 +17,28 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>UNNotificationExtensionCategory</key>
 			<string>worktimeAlert</string>
-			<key>UNNotificationExtensionInitialContentSizeRatio</key>
-			<real>0.8</real>
-			<key>UNNotificationExtensionUserInteractionEnabled</key>
-			<true/>
 			<key>UNNotificationExtensionDefaultContentHidden</key>
 			<true/>
+			<key>UNNotificationExtensionInitialContentSizeRatio</key>
+			<real>0.80000000000000004</real>
 			<key>UNNotificationExtensionOverridesDefaultTitle</key>
 			<true/>
+			<key>UNNotificationExtensionUserInteractionEnabled</key>
+			<true/>
 		</dict>
-		<key>NSExtensionPrincipalClass</key>
-		<string>NotificationViewController</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.usernotifications.content-extension</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>NotificationViewController</string>
 	</dict>
 </dict>
 </plist>
