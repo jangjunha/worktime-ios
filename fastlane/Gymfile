@@ -1,0 +1,6 @@
+scheme("worktime")
+workspace("worktime.xcworkspace")
+
+clean(true)
+include_bitcode(true)
+output_directory("./build")

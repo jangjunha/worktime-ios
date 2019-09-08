@@ -1,0 +1,922 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		311805B480B137FBA2E3BD79 /* Pods_worktime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341C8949A343ADCCFDA17F39 /* Pods_worktime.framework */; };
+		3C97102B232162D600C0A2D8 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C97102A232162D600C0A2D8 /* DateExtension.swift */; };
+		3C97102C232162F200C0A2D8 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C97102A232162D600C0A2D8 /* DateExtension.swift */; };
+		3C97102E2321657E00C0A2D8 /* CommonDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C97102D2321657E00C0A2D8 /* CommonDependency.swift */; };
+		3C97102F2321658900C0A2D8 /* CommonDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C97102D2321657E00C0A2D8 /* CommonDependency.swift */; };
+		3C971030232165C100C0A2D8 /* GoogleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09E8232143D000DBC21A /* GoogleAPI.swift */; };
+		3C9E09DF2321333100DBC21A /* AppDependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09DE2321333100DBC21A /* AppDependencyResolver.swift */; };
+		3C9E09E22321379600DBC21A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09E12321379600DBC21A /* BaseViewController.swift */; };
+		3C9E09E423213BFC00DBC21A /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09E323213BFC00DBC21A /* Preference.swift */; };
+		3C9E09E523213D1700DBC21A /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09E323213BFC00DBC21A /* Preference.swift */; };
+		3C9E09E7232141DC00DBC21A /* SelectCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09E6232141DC00DBC21A /* SelectCalendarViewController.swift */; };
+		3C9E09E9232143D000DBC21A /* GoogleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09E8232143D000DBC21A /* GoogleAPI.swift */; };
+		3C9E09EB2321450B00DBC21A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09EA2321450B00DBC21A /* StringExtension.swift */; };
+		3C9E09EC2321452E00DBC21A /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09EA2321450B00DBC21A /* StringExtension.swift */; };
+		3CC2166D2323E85500C21A3F /* CreateWorktimeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2166C2323E85500C21A3F /* CreateWorktimeViewReactor.swift */; };
+		3CC2166E2323EC1C00C21A3F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9E09E12321379600DBC21A /* BaseViewController.swift */; };
+		3CC2167023241E0100C21A3F /* CreateWorktimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2166F23241E0100C21A3F /* CreateWorktimeViewController.swift */; };
+		3CC2167123241E2B00C21A3F /* CreateWorktimeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2166C2323E85500C21A3F /* CreateWorktimeViewReactor.swift */; };
+		3CC2167223241E2F00C21A3F /* CreateWorktimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2166F23241E0100C21A3F /* CreateWorktimeViewController.swift */; };
+		3CC2167D2324408700C21A3F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2167C2324408700C21A3F /* NotificationService.swift */; };
+		3CC2167E2324421700C21A3F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2167C2324408700C21A3F /* NotificationService.swift */; };
+		3CC21686232448FB00C21A3F /* worktimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC21685232448FB00C21A3F /* worktimeUITests.swift */; };
+		3CC2168E232449F100C21A3F /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC2168D232449F100C21A3F /* SnapshotHelper.swift */; };
+		3CC216BC2324DC2300C21A3F /* StubAppDependencyResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC216BB2324DC2300C21A3F /* StubAppDependencyResolver.swift */; };
+		3CC216C02324DCF900C21A3F /* GoogleLoginServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */; };
+		3CC216C12324DD0400C21A3F /* GoogleLoginServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */; };
+		3CC216C42324DE0900C21A3F /* GoogleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC216C32324DE0900C21A3F /* GoogleLoginService.swift */; };
+		3CE9E5972322AE4E003EC279 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9E5962322AE4E003EC279 /* SettingsViewController.swift */; };
+		3CE9E5992322C7A8003EC279 /* SelectNotificationTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9E5982322C7A8003EC279 /* SelectNotificationTimeViewController.swift */; };
+		3CFF35382324E25700B6448A /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFF35372324E25600B6448A /* AppDependency.swift */; };
+		586C03F8472850B131BB1059 /* Pods_worktime_noti_content.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48AF3581902779012F773D08 /* Pods_worktime_noti_content.framework */; };
+		C314CF232317813C00F27980 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314CF222317813C00F27980 /* UIColorExtension.swift */; };
+		C314CF242317815100F27980 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C314CF222317813C00F27980 /* UIColorExtension.swift */; };
+		C333DE5322EAA991009418CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333DE5222EAA991009418CE /* AppDelegate.swift */; };
+		C333DE5A22EAA993009418CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C333DE5922EAA993009418CE /* Assets.xcassets */; };
+		C333DE5D22EAA993009418CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C333DE5B22EAA993009418CE /* LaunchScreen.storyboard */; };
+		C333DE6A22EAAAA4009418CE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C333DE6922EAAAA4009418CE /* UserNotifications.framework */; };
+		C333DE6C22EAAAA4009418CE /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C333DE6B22EAAAA4009418CE /* UserNotificationsUI.framework */; };
+		C333DE6F22EAAAA4009418CE /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333DE6E22EAAAA4009418CE /* NotificationViewController.swift */; };
+		C333DE7622EAAAA4009418CE /* worktime-noti-content.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C333DE6822EAAAA4009418CE /* worktime-noti-content.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3CC21688232448FB00C21A3F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C333DE4722EAA991009418CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C333DE4E22EAA991009418CE;
+			remoteInfo = worktime;
+		};
+		C333DE7422EAAAA4009418CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C333DE4722EAA991009418CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C333DE6722EAAAA4009418CE;
+			remoteInfo = "worktime-noti-content";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C333DE7A22EAAAA4009418CE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C333DE7622EAAAA4009418CE /* worktime-noti-content.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2091A9538693E6A50F68CE9F /* Pods-worktime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worktime.release.xcconfig"; path = "Target Support Files/Pods-worktime/Pods-worktime.release.xcconfig"; sourceTree = "<group>"; };
+		341C8949A343ADCCFDA17F39 /* Pods_worktime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worktime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C97102A232162D600C0A2D8 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		3C97102D2321657E00C0A2D8 /* CommonDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonDependency.swift; sourceTree = "<group>"; };
+		3C97103123216AEE00C0A2D8 /* worktime-noti-content.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "worktime-noti-content.entitlements"; sourceTree = "<group>"; };
+		3C9E09DE2321333100DBC21A /* AppDependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyResolver.swift; sourceTree = "<group>"; };
+		3C9E09E12321379600DBC21A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = ../BaseViewController.swift; sourceTree = "<group>"; };
+		3C9E09E323213BFC00DBC21A /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
+		3C9E09E6232141DC00DBC21A /* SelectCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCalendarViewController.swift; sourceTree = "<group>"; };
+		3C9E09E8232143D000DBC21A /* GoogleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GoogleAPI.swift; path = ../GoogleAPI.swift; sourceTree = "<group>"; };
+		3C9E09EA2321450B00DBC21A /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		3CC2166C2323E85500C21A3F /* CreateWorktimeViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateWorktimeViewReactor.swift; path = ../CreateWorktimeViewReactor.swift; sourceTree = "<group>"; };
+		3CC2166F23241E0100C21A3F /* CreateWorktimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateWorktimeViewController.swift; path = ../CreateWorktimeViewController.swift; sourceTree = "<group>"; };
+		3CC2167923242F8C00C21A3F /* worktime.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worktime.entitlements; sourceTree = "<group>"; };
+		3CC2167A232430C200C21A3F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CC2167C2324408700C21A3F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		3CC21683232448FB00C21A3F /* worktimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = worktimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CC21685232448FB00C21A3F /* worktimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = worktimeUITests.swift; sourceTree = "<group>"; };
+		3CC21687232448FB00C21A3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CC2168D232449F100C21A3F /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		3CC216BB2324DC2300C21A3F /* StubAppDependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubAppDependencyResolver.swift; sourceTree = "<group>"; };
+		3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginServiceType.swift; sourceTree = "<group>"; };
+		3CC216C32324DE0900C21A3F /* GoogleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginService.swift; sourceTree = "<group>"; };
+		3CE9E5962322AE4E003EC279 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		3CE9E5982322C7A8003EC279 /* SelectNotificationTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNotificationTimeViewController.swift; sourceTree = "<group>"; };
+		3CFF35372324E25600B6448A /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
+		48AF3581902779012F773D08 /* Pods_worktime_noti_content.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worktime_noti_content.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		50F698F2D8B41F8FDD610B1C /* Pods-worktime-noti-content.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worktime-noti-content.release.xcconfig"; path = "Target Support Files/Pods-worktime-noti-content/Pods-worktime-noti-content.release.xcconfig"; sourceTree = "<group>"; };
+		87243B98C4F2FA809BA8665D /* Pods-worktime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worktime.debug.xcconfig"; path = "Target Support Files/Pods-worktime/Pods-worktime.debug.xcconfig"; sourceTree = "<group>"; };
+		B3B29BE915FD2292CDDD3CE6 /* Pods-worktime-noti-content.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worktime-noti-content.debug.xcconfig"; path = "Target Support Files/Pods-worktime-noti-content/Pods-worktime-noti-content.debug.xcconfig"; sourceTree = "<group>"; };
+		C314CF222317813C00F27980 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		C333DE4F22EAA991009418CE /* worktime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = worktime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C333DE5222EAA991009418CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C333DE5922EAA993009418CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C333DE5C22EAA993009418CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C333DE6822EAAAA4009418CE /* worktime-noti-content.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "worktime-noti-content.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C333DE6922EAAAA4009418CE /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		C333DE6B22EAAAA4009418CE /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		C333DE6E22EAAAA4009418CE /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		C333DE7322EAAAA4009418CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3CC21680232448FB00C21A3F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C333DE4C22EAA991009418CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				311805B480B137FBA2E3BD79 /* Pods_worktime.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C333DE6522EAAAA4009418CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C333DE6C22EAAAA4009418CE /* UserNotificationsUI.framework in Frameworks */,
+				C333DE6A22EAAAA4009418CE /* UserNotifications.framework in Frameworks */,
+				586C03F8472850B131BB1059 /* Pods_worktime_noti_content.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3CC2167323242E0F00C21A3F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C333DE5B22EAA993009418CE /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3CC2167423242E1A00C21A3F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3CE9E5962322AE4E003EC279 /* SettingsViewController.swift */,
+				3C9E09E6232141DC00DBC21A /* SelectCalendarViewController.swift */,
+				3CE9E5982322C7A8003EC279 /* SelectNotificationTimeViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		3CC2167523242E5500C21A3F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3C9E09E12321379600DBC21A /* BaseViewController.swift */,
+				3CC2166F23241E0100C21A3F /* CreateWorktimeViewController.swift */,
+				3CC2166C2323E85500C21A3F /* CreateWorktimeViewReactor.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		3CC2167623242E5C00C21A3F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3C97102A232162D600C0A2D8 /* DateExtension.swift */,
+				3C9E09EA2321450B00DBC21A /* StringExtension.swift */,
+				C314CF222317813C00F27980 /* UIColorExtension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3CC2167723242E7400C21A3F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				3C9E09E8232143D000DBC21A /* GoogleAPI.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		3CC21684232448FB00C21A3F /* worktimeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3CC21685232448FB00C21A3F /* worktimeUITests.swift */,
+				3CC2168D232449F100C21A3F /* SnapshotHelper.swift */,
+				3CC21687232448FB00C21A3F /* Info.plist */,
+			);
+			path = worktimeUITests;
+			sourceTree = "<group>";
+		};
+		3CFF35352324DF0600B6448A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3C9E09E323213BFC00DBC21A /* Preference.swift */,
+				3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */,
+				3CC2167C2324408700C21A3F /* NotificationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3CFF35362324DF1700B6448A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3CC216C32324DE0900C21A3F /* GoogleLoginService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8C427702DE3000FF93DD4AEA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				87243B98C4F2FA809BA8665D /* Pods-worktime.debug.xcconfig */,
+				2091A9538693E6A50F68CE9F /* Pods-worktime.release.xcconfig */,
+				B3B29BE915FD2292CDDD3CE6 /* Pods-worktime-noti-content.debug.xcconfig */,
+				50F698F2D8B41F8FDD610B1C /* Pods-worktime-noti-content.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		AEB8DF229839544BE0931E2A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				341C8949A343ADCCFDA17F39 /* Pods_worktime.framework */,
+				C333DE6922EAAAA4009418CE /* UserNotifications.framework */,
+				C333DE6B22EAAAA4009418CE /* UserNotificationsUI.framework */,
+				48AF3581902779012F773D08 /* Pods_worktime_noti_content.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C314CF212317812A00F27980 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				3C97102D2321657E00C0A2D8 /* CommonDependency.swift */,
+				3CC2167523242E5500C21A3F /* View Controllers */,
+				3CFF35352324DF0600B6448A /* Services */,
+				3CC2167723242E7400C21A3F /* Networking */,
+				3CC2167623242E5C00C21A3F /* Utils */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		C333DE4622EAA991009418CE = {
+			isa = PBXGroup;
+			children = (
+				C314CF212317812A00F27980 /* common */,
+				C333DE5122EAA991009418CE /* worktime */,
+				C333DE6D22EAAAA4009418CE /* worktime-noti-content */,
+				3CC21684232448FB00C21A3F /* worktimeUITests */,
+				C333DE5022EAA991009418CE /* Products */,
+				8C427702DE3000FF93DD4AEA /* Pods */,
+				AEB8DF229839544BE0931E2A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C333DE5022EAA991009418CE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C333DE4F22EAA991009418CE /* worktime.app */,
+				C333DE6822EAAAA4009418CE /* worktime-noti-content.appex */,
+				3CC21683232448FB00C21A3F /* worktimeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C333DE5122EAA991009418CE /* worktime */ = {
+			isa = PBXGroup;
+			children = (
+				3CFF35372324E25600B6448A /* AppDependency.swift */,
+				3C9E09DE2321333100DBC21A /* AppDependencyResolver.swift */,
+				3CC216BB2324DC2300C21A3F /* StubAppDependencyResolver.swift */,
+				C333DE5222EAA991009418CE /* AppDelegate.swift */,
+				3CC2167423242E1A00C21A3F /* View Controllers */,
+				3CFF35362324DF1700B6448A /* Services */,
+				3CC2167323242E0F00C21A3F /* Supporting Files */,
+				C333DE5922EAA993009418CE /* Assets.xcassets */,
+				3CC2167A232430C200C21A3F /* Info.plist */,
+				3CC2167923242F8C00C21A3F /* worktime.entitlements */,
+			);
+			path = worktime;
+			sourceTree = "<group>";
+		};
+		C333DE6D22EAAAA4009418CE /* worktime-noti-content */ = {
+			isa = PBXGroup;
+			children = (
+				C333DE6E22EAAAA4009418CE /* NotificationViewController.swift */,
+				C333DE7322EAAAA4009418CE /* Info.plist */,
+				3C97103123216AEE00C0A2D8 /* worktime-noti-content.entitlements */,
+			);
+			path = "worktime-noti-content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3CC21682232448FB00C21A3F /* worktimeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CC2168A232448FB00C21A3F /* Build configuration list for PBXNativeTarget "worktimeUITests" */;
+			buildPhases = (
+				3CC2167F232448FB00C21A3F /* Sources */,
+				3CC21680232448FB00C21A3F /* Frameworks */,
+				3CC21681232448FB00C21A3F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3CC21689232448FB00C21A3F /* PBXTargetDependency */,
+			);
+			name = worktimeUITests;
+			productName = worktimeUITests;
+			productReference = 3CC21683232448FB00C21A3F /* worktimeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		C333DE4E22EAA991009418CE /* worktime */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C333DE6122EAA993009418CE /* Build configuration list for PBXNativeTarget "worktime" */;
+			buildPhases = (
+				9136FDB073CE3FE5E5749F32 /* [CP] Check Pods Manifest.lock */,
+				C333DE4B22EAA991009418CE /* Sources */,
+				C333DE4C22EAA991009418CE /* Frameworks */,
+				C333DE4D22EAA991009418CE /* Resources */,
+				CC32DACD1C5A74FDD682E643 /* [CP] Embed Pods Frameworks */,
+				C333DE7A22EAAAA4009418CE /* Embed App Extensions */,
+				E7C745249606D2B7C1720E8E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C333DE7522EAAAA4009418CE /* PBXTargetDependency */,
+			);
+			name = worktime;
+			productName = worktime;
+			productReference = C333DE4F22EAA991009418CE /* worktime.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C333DE6722EAAAA4009418CE /* worktime-noti-content */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C333DE7922EAAAA4009418CE /* Build configuration list for PBXNativeTarget "worktime-noti-content" */;
+			buildPhases = (
+				EB97441A924D94ED15186466 /* [CP] Check Pods Manifest.lock */,
+				C333DE6422EAAAA4009418CE /* Sources */,
+				C333DE6522EAAAA4009418CE /* Frameworks */,
+				C333DE6622EAAAA4009418CE /* Resources */,
+				3CC2167823242F0A00C21A3F /* Lint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "worktime-noti-content";
+			productName = "worktime-noti-content";
+			productReference = C333DE6822EAAAA4009418CE /* worktime-noti-content.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C333DE4722EAA991009418CE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = heek.kr;
+				TargetAttributes = {
+					3CC21682232448FB00C21A3F = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = C333DE4E22EAA991009418CE;
+					};
+					C333DE4E22EAA991009418CE = {
+						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					C333DE6722EAAAA4009418CE = {
+						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = C333DE4A22EAA991009418CE /* Build configuration list for PBXProject "worktime" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C333DE4622EAA991009418CE;
+			productRefGroup = C333DE5022EAA991009418CE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C333DE4E22EAA991009418CE /* worktime */,
+				C333DE6722EAAAA4009418CE /* worktime-noti-content */,
+				3CC21682232448FB00C21A3F /* worktimeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3CC21681232448FB00C21A3F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C333DE4D22EAA991009418CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C333DE5D22EAA993009418CE /* LaunchScreen.storyboard in Resources */,
+				C333DE5A22EAA993009418CE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C333DE6622EAAAA4009418CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3CC2167823242F0A00C21A3F /* Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Lint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		9136FDB073CE3FE5E5749F32 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-worktime-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC32DACD1C5A74FDD682E643 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-worktime/Pods-worktime-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-worktime/Pods-worktime-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-worktime/Pods-worktime-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7C745249606D2B7C1720E8E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-worktime/Pods-worktime-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-worktime/Pods-worktime-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-worktime/Pods-worktime-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EB97441A924D94ED15186466 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-worktime-noti-content-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3CC2167F232448FB00C21A3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CC21686232448FB00C21A3F /* worktimeUITests.swift in Sources */,
+				3CC2168E232449F100C21A3F /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C333DE4B22EAA991009418CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CC216BC2324DC2300C21A3F /* StubAppDependencyResolver.swift in Sources */,
+				3C9E09E22321379600DBC21A /* BaseViewController.swift in Sources */,
+				3CE9E5992322C7A8003EC279 /* SelectNotificationTimeViewController.swift in Sources */,
+				3C97102B232162D600C0A2D8 /* DateExtension.swift in Sources */,
+				3C9E09E9232143D000DBC21A /* GoogleAPI.swift in Sources */,
+				3C9E09E7232141DC00DBC21A /* SelectCalendarViewController.swift in Sources */,
+				C333DE5322EAA991009418CE /* AppDelegate.swift in Sources */,
+				3C9E09EB2321450B00DBC21A /* StringExtension.swift in Sources */,
+				3C9E09DF2321333100DBC21A /* AppDependencyResolver.swift in Sources */,
+				3C9E09E423213BFC00DBC21A /* Preference.swift in Sources */,
+				3CC216C02324DCF900C21A3F /* GoogleLoginServiceType.swift in Sources */,
+				3CC2167123241E2B00C21A3F /* CreateWorktimeViewReactor.swift in Sources */,
+				3CC216C42324DE0900C21A3F /* GoogleLoginService.swift in Sources */,
+				3CFF35382324E25700B6448A /* AppDependency.swift in Sources */,
+				3C97102E2321657E00C0A2D8 /* CommonDependency.swift in Sources */,
+				C314CF232317813C00F27980 /* UIColorExtension.swift in Sources */,
+				3CC2167223241E2F00C21A3F /* CreateWorktimeViewController.swift in Sources */,
+				3CC2167D2324408700C21A3F /* NotificationService.swift in Sources */,
+				3CE9E5972322AE4E003EC279 /* SettingsViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C333DE6422EAAAA4009418CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CC2167023241E0100C21A3F /* CreateWorktimeViewController.swift in Sources */,
+				3CC2167E2324421700C21A3F /* NotificationService.swift in Sources */,
+				3C9E09EC2321452E00DBC21A /* StringExtension.swift in Sources */,
+				3C97102F2321658900C0A2D8 /* CommonDependency.swift in Sources */,
+				3CC2166D2323E85500C21A3F /* CreateWorktimeViewReactor.swift in Sources */,
+				3C971030232165C100C0A2D8 /* GoogleAPI.swift in Sources */,
+				3CC216C12324DD0400C21A3F /* GoogleLoginServiceType.swift in Sources */,
+				3C97102C232162F200C0A2D8 /* DateExtension.swift in Sources */,
+				3CC2166E2323EC1C00C21A3F /* BaseViewController.swift in Sources */,
+				C333DE6F22EAAAA4009418CE /* NotificationViewController.swift in Sources */,
+				3C9E09E523213D1700DBC21A /* Preference.swift in Sources */,
+				C314CF242317815100F27980 /* UIColorExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3CC21689232448FB00C21A3F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C333DE4E22EAA991009418CE /* worktime */;
+			targetProxy = 3CC21688232448FB00C21A3F /* PBXContainerItemProxy */;
+		};
+		C333DE7522EAAAA4009418CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C333DE6722EAAAA4009418CE /* worktime-noti-content */;
+			targetProxy = C333DE7422EAAAA4009418CE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C333DE5B22EAA993009418CE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C333DE5C22EAA993009418CE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3CC2168B232448FB00C21A3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3FWRVLE254;
+				INFOPLIST_FILE = worktimeUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.heek.worktimeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = worktime;
+			};
+			name = Debug;
+		};
+		3CC2168C232448FB00C21A3F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3FWRVLE254;
+				INFOPLIST_FILE = worktimeUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.heek.worktimeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = worktime;
+			};
+			name = Release;
+		};
+		C333DE5F22EAA993009418CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C333DE6022EAA993009418CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C333DE6222EAA993009418CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 87243B98C4F2FA809BA8665D /* Pods-worktime.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = worktime/worktime.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3FWRVLE254;
+				INFOPLIST_FILE = worktime/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.heek.worktime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C333DE6322EAA993009418CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2091A9538693E6A50F68CE9F /* Pods-worktime.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = worktime/worktime.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3FWRVLE254;
+				INFOPLIST_FILE = worktime/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kr.heek.worktime;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C333DE7722EAAAA4009418CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3B29BE915FD2292CDDD3CE6 /* Pods-worktime-noti-content.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "worktime-noti-content/worktime-noti-content.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3FWRVLE254;
+				INFOPLIST_FILE = "worktime-noti-content/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.heek.worktime.worktime-noti-content";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C333DE7822EAAAA4009418CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50F698F2D8B41F8FDD610B1C /* Pods-worktime-noti-content.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "worktime-noti-content/worktime-noti-content.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3FWRVLE254;
+				INFOPLIST_FILE = "worktime-noti-content/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.heek.worktime.worktime-noti-content";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3CC2168A232448FB00C21A3F /* Build configuration list for PBXNativeTarget "worktimeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CC2168B232448FB00C21A3F /* Debug */,
+				3CC2168C232448FB00C21A3F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C333DE4A22EAA991009418CE /* Build configuration list for PBXProject "worktime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C333DE5F22EAA993009418CE /* Debug */,
+				C333DE6022EAA993009418CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C333DE6122EAA993009418CE /* Build configuration list for PBXNativeTarget "worktime" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C333DE6222EAA993009418CE /* Debug */,
+				C333DE6322EAA993009418CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C333DE7922EAAAA4009418CE /* Build configuration list for PBXNativeTarget "worktime-noti-content" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C333DE7722EAAAA4009418CE /* Debug */,
+				C333DE7822EAAAA4009418CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C333DE4722EAA991009418CE /* Project object */;
+}

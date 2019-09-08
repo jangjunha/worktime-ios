@@ -1,0 +1,29 @@
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Take screenshot and Frame it"
+  lane :take_screenshot do
+    snapshot
+
+    frameit(
+      path: "fastlane/screenshots",
+      white: true
+    )
+  end
+
+  desc "Clean Build and Deploy to App Store"
+  lane :release do
+
+    # take_screenshot
+
+    clear_derived_data
+
+    gym
+
+    deliver
+
+    rocket
+  end
+end

@@ -1,0 +1,25 @@
+# Uncomment the lines below you want to change by removing the # in the beginning
+
+# A list of devices you want to take the screenshots from
+devices([
+  "iPhone 8",
+  "iPhone SE",
+  "iPhone Xs",  # "iPhone X",
+  "iPhone Xs Max",
+  "iPad Pro (12.9-inch) (3rd generation)",
+  "iPad Pro (12.9-inch) (2nd generation)"
+])
+
+languages([
+  "ko"
+])
+
+# The name of the scheme which contains the UI Tests
+scheme("worktimeUITests")
+configuration("Debug")
+
+# Where should the resulting screenshots be stored?
+output_directory("./fastlane/screenshots")
+
+skip_open_summary(true)
+clear_previous_screenshots(true)

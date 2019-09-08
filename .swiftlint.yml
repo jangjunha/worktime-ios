@@ -1,0 +1,30 @@
+disabled_rules:
+  - vertical_whitespace
+  - type_body_length
+  - function_body_length
+
+included:
+  - common/
+  - worktime/
+  - worktime-noti-content/
+
+excluded:
+  - Pods
+
+line_length: 120
+
+cyclomatic_complexity: 20
+
+identifier_name:
+  max_length:
+    warning: 80
+  excluded:
+    - a
+    - b
+    - c
+    - d
+    - e
+    - id
+    - url
+    - me
+    - on
