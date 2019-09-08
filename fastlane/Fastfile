@@ -3,6 +3,16 @@
 default_platform(:ios)
 
 platform :ios do
+  desc "Lint"
+  lane :lint do |options|
+    swiftlint(
+      mode: :lint,
+      executable: "Pods/SwiftLint/swiftlint",
+      output_file: options[:output_file],
+      reporter: options[:reporter]
+    )
+  end
+
   desc "Take screenshot and Frame it"
   lane :take_screenshot do
     snapshot

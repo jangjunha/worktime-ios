@@ -16,6 +16,11 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
+### ios lint
+```
+fastlane ios lint
+```
+Lint
 ### ios take_screenshot
 ```
 fastlane ios take_screenshot
