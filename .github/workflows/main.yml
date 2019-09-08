@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+    - master
+    - develop
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install gems
+      run: bundle install
+    - name: Install pods
+      run: |
+        bundle exec pod repo update
+        bundle exec pod install
+    - name: Lint
+      run: bundle exec fastlane lint
