@@ -19,14 +19,14 @@ platform :ios do
     increment_build_number
   end
 
-  desc "Take screenshot and Frame it"
+  desc "Take screenshot"
   lane :take_screenshot do
     snapshot
 
-    frameit(
-      path: "fastlane/screenshots",
-      white: true
-    )
+    # frameit(
+    #   path: "fastlane/screenshots",
+    #   white: true
+    # )
   end
 
   desc "Clean Build and Deploy to App Store"

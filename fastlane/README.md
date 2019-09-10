@@ -30,7 +30,7 @@ Update version
 ```
 fastlane ios take_screenshot
 ```
-Take screenshot and Frame it
+Take screenshot
 ### ios release
 ```
 fastlane ios release
