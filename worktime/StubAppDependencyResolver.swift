@@ -29,6 +29,7 @@ class StubGoogleLoginService: GoogleLoginServiceType {
             accessToken: "MOCK-ACCESS-TOKEN",
             accessTokenExpirationDate: Date().addingTimeInterval(3600),
             refreshToken: "MOCK-REFRESH-TOKEN",
+            email: "junha@heek.kr",
             name: "junha"
         )
     }

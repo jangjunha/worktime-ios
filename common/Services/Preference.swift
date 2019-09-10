@@ -16,6 +16,7 @@ class Preference {
         static let gidAuthAccessToken = "GID_AUTH_ACCESS_TOKEN"
         static let gidAuthAccessTokenExpirationDate = "GID_AUTH_ACCESS_TOKEN_EXPIRATION_DATE"
         static let gidAuthRefreshToken = "GID_AUTH_REFRESH_TOKEN"
+        static let gidProfileEmail = "GID_PROFILE_EMAIL"
         static let gidProfileName = "GID_PROFILE_NAME"
 
         static let selectedCalendarID = "SELECTED_CALENDAR_ID"
@@ -36,6 +37,7 @@ class Preference {
                     forKey: Key.gidAuthAccessTokenExpirationDate
                   )?.date,
                   let refreshToken = self.userDefaults.string(forKey: Key.gidAuthRefreshToken),
+                  let email = self.userDefaults.string(forKey: Key.gidProfileEmail),
                   let name = self.userDefaults.string(forKey: Key.gidProfileName) else {
                 return nil
             }
@@ -43,6 +45,7 @@ class Preference {
                 accessToken: accessToken,
                 accessTokenExpirationDate: accessTokenExpirationDate,
                 refreshToken: refreshToken,
+                email: email,
                 name: name
             )
         }
@@ -53,6 +56,7 @@ class Preference {
                 forKey: Key.gidAuthAccessTokenExpirationDate
             )
             self.userDefaults.set(newValue?.refreshToken, forKey: Key.gidAuthRefreshToken)
+            self.userDefaults.set(newValue?.email, forKey: Key.gidProfileEmail)
             self.userDefaults.set(newValue?.name, forKey: Key.gidProfileName)
         }
     }
@@ -85,11 +89,13 @@ extension Reactive where Base: Preference {
             self.base.userDefaults.rx.observe(String.self, Preference.Key.gidAuthAccessToken),
             self.base.userDefaults.rx.observe(String.self, Preference.Key.gidAuthAccessTokenExpirationDate),
             self.base.userDefaults.rx.observe(String.self, Preference.Key.gidAuthRefreshToken),
+            self.base.userDefaults.rx.observe(String.self, Preference.Key.gidProfileEmail),
             self.base.userDefaults.rx.observe(String.self, Preference.Key.gidProfileName)
-        ).map { accessToken, accessTokenExpirationDate, refreshToken, name -> GoogleUser? in
+        ).map { accessToken, accessTokenExpirationDate, refreshToken, email, name -> GoogleUser? in
             guard let accessToken = accessToken,
                   let accessTokenExpirationDate = accessTokenExpirationDate?.date,
                   let refreshToken = refreshToken,
+                  let email = email,
                   let name = name else {
                 return nil
             }
@@ -97,6 +103,7 @@ extension Reactive where Base: Preference {
                 accessToken: accessToken,
                 accessTokenExpirationDate: accessTokenExpirationDate,
                 refreshToken: refreshToken,
+                email: email,
                 name: name
             )
         }
@@ -130,5 +137,6 @@ struct GoogleUser {
     let accessToken: String
     let accessTokenExpirationDate: Date
     let refreshToken: String
+    let email: String
     let name: String
 }

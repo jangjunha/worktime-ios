@@ -55,6 +55,7 @@ extension GoogleLoginService: GIDSignInDelegate {
             accessToken: user.authentication.accessToken,
             accessTokenExpirationDate: user.authentication.accessTokenExpirationDate,
             refreshToken: user.authentication.refreshToken,
+            email: user.profile.email,
             name: user.profile.name
         )
     }

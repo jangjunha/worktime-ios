@@ -76,8 +76,8 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
                 switch row {
                 case let .profile(name):
-                    cell.textLabel?.text = name
                     cell.selectionStyle = .none
+                    cell.textLabel?.text = "\(user.name)(\(user.email))"
                 case .signinButton:
                     cell.textLabel?.text = "로그인"
                     cell.textLabel?.textColor = .blue
@@ -122,7 +122,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     return [.signinButton]
                 }
                 return [
-                    .profile(name: user.name),
+                    .profile(user: user),
                     .signoutButton
                 ]
             }
@@ -291,7 +291,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
 enum SettingsTableRow {
     // Account
-    case profile(name: String)
+    case profile(user: GoogleUser)
     case signinButton
     case signoutButton
 

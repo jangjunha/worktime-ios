@@ -96,6 +96,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                     accessToken: token.accessToken,
                     accessTokenExpirationDate: Date().addingTimeInterval(TimeInterval(token.expiresIn)),
                     refreshToken: googleUser.refreshToken,
+                    email: googleUser.email,
                     name: googleUser.name
                 ) }
                 .do(onSuccess: { [weak self] user in
