@@ -1,3 +1,7 @@
+/*.cer
+/*.p12
+/*.certSigningRequest
+/*.mobileprovision
 
 # Created by https://www.gitignore.io/api/vim,ruby,xcode,macos,windows,fastlane,cocoapods
 # Edit at https://www.gitignore.io/?templates=vim,ruby,xcode,macos,windows,fastlane,cocoapods
