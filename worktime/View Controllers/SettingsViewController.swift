@@ -34,7 +34,6 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
     enum Constant {
         static let title = "근무시간"
-        static let commonCellIdentifier = "commonCell"
     }
 
 
@@ -50,8 +49,32 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
     // MARK: UI
 
-    let tableView = UITableView(frame: .zero, style: .grouped).then {
-        $0.register(UITableViewCell.self, forCellReuseIdentifier: Constant.commonCellIdentifier)
+    let tableView = UITableView(frame: .zero, style: .grouped)
+
+    let profileCell = UITableViewCell().then {
+        $0.selectionStyle = .none
+    }
+    let signinCell = UITableViewCell().then {
+        $0.textLabel?.text = "로그인"
+        $0.textLabel?.textColor = .blue
+    }
+    let signoutCell = UITableViewCell().then {
+        $0.textLabel?.text = "로그아웃"
+        $0.textLabel?.textColor = .red
+    }
+    let selectCalendarCell = UITableViewCell().then {
+        $0.textLabel?.text = "캘린더를 선택하세요"
+        $0.accessoryType = .disclosureIndicator
+    }
+    let selectedCalendarCell = UITableViewCell().then {
+        $0.accessoryType = .disclosureIndicator
+    }
+    let notificationScheduleCell = UITableViewCell(style: .value1, reuseIdentifier: nil).then {
+        $0.textLabel?.text = "알림 시각"
+        $0.accessoryType = .disclosureIndicator
+    }
+    let notifyNowCell = UITableViewCell().then {
+        $0.textLabel?.text = "지금 알림 받아보기"
     }
 
 
@@ -71,29 +94,26 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
         let dataSource = RxTableViewSectionedReloadDataSource<SettingsTableSectionModel>(
             configureCell: { _, _, _, row in
-                let cell = UITableViewCell(style: .value1, reuseIdentifier: Constant.commonCellIdentifier)
-                type(of: self).prepareCommonCellForReuse(cell)
-
                 switch row {
-                case let .profile(name):
-                    cell.selectionStyle = .none
+                case let .profile(user):
+                    let cell = self.profileCell
                     cell.textLabel?.text = "\(user.name)(\(user.email))"
+                    return cell
                 case .signinButton:
-                    cell.textLabel?.text = "로그인"
-                    cell.textLabel?.textColor = .blue
+                    return self.signinCell
                 case .signoutButton:
-                    cell.textLabel?.text = "로그아웃"
-                    cell.textLabel?.textColor = .red
+                    return self.signoutCell
                 case let .selectCalendar(isEnabled):
-                    cell.textLabel?.text = "캘린더를 선택하세요"
+                    let cell = self.selectCalendarCell
                     cell.textLabel?.textColor = isEnabled ? .blue : .lightGray
                     cell.selectionStyle = isEnabled ? .default : .none
-                    cell.accessoryType = .disclosureIndicator
+                    return cell
                 case let .selectedCalendar(calendarID):
+                    let cell = self.selectedCalendarCell
                     cell.textLabel?.text = calendarID
-                    cell.accessoryType = .disclosureIndicator
+                    return cell
                 case let .notification(time, isEnabled):
-                    cell.textLabel?.text = "알림 시각"
+                    let cell = self.notificationScheduleCell
                     cell.textLabel?.textColor = isEnabled ? .black : .lightGray
                     cell.detailTextLabel?.text = { time in
                         guard let time = time else {
@@ -102,13 +122,13 @@ class SettingsViewController: BaseViewController, FactoryModule {
                         return String(format: "평일 %02d:%02d", Int(time / 60), time % 60)
                     }(time)
                     cell.selectionStyle = isEnabled ? .default : .none
-                    cell.accessoryType = .disclosureIndicator
+                    return cell
                 case let .notifyNow(isEnabled):
-                    cell.textLabel?.text = "지금 알림 받아보기"
+                    let cell = self.notifyNowCell
                     cell.textLabel?.textColor = isEnabled ? .black : .lightGray
                     cell.selectionStyle = isEnabled ? .default : .none
+                    return cell
                 }
-                return cell
             },
             titleForHeaderInSection: { dataSource, index in
                 return dataSource.sectionModels[index].title
@@ -276,16 +296,10 @@ class SettingsViewController: BaseViewController, FactoryModule {
         self.tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-    }
 
-
-    // MARK: Utils
-
-    static func prepareCommonCellForReuse(_ cell: UITableViewCell) {
-        cell.textLabel?.text = nil
-        cell.textLabel?.textColor = .black
-        cell.selectionStyle = .default
-        cell.accessoryType = .none
+        self.eventTitleField.snp.makeConstraints { make in
+            make.edges.equalTo(self.eventTitleCell.snp.margins)
+        }
     }
 }
 
