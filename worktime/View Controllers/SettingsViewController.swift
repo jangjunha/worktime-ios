@@ -215,7 +215,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                         dateMatching: components,
                         repeats: false
                     ) { error in
-                        if let error = error {
+                        guard error == nil else {
                             let alertController = UIAlertController(
                                 title: "오류",
                                 message: "알림을 등록하지 못했습니다. 설정 앱에서 Worktime 앱에 알림 권한이 있는지 확인해주세요.",
@@ -226,6 +226,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                                 style: .default
                             ))
                             self.present(alertController, animated: true)
+                            return
                         }
                     }
                 case .selectCalendar(isEnabled: false),
