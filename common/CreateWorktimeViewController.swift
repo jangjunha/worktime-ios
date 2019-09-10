@@ -50,7 +50,9 @@ class CreateWorktimeViewController: BaseViewController, View, FactoryModule {
 
     // MARK: UI
 
-    let titleLabel = UILabel(frame: .zero)
+    let titleLabel = UILabel().then {
+        $0.numberOfLines = 0
+    }
 
     let stackView = UIStackView(frame: .zero).then {
         $0.alignment = .fill
