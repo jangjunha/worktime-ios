@@ -10,6 +10,7 @@ import GoogleSignIn
 import Pure
 import RxSwift
 import RxDataSources
+import RxKeyboard
 import SnapKit
 import Then
 import UIKit
@@ -210,6 +211,12 @@ class SettingsViewController: BaseViewController, FactoryModule {
             .map { [$0, $1, $2] }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { [weak self] keyboardVisibleHeight in
+                self?.tableView.contentInset.bottom = keyboardVisibleHeight
+            })
+            .disposed(by: disposeBag)
 
         self.tableView
             .rx.modelSelected(SettingsTableRow.self)
