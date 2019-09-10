@@ -3,6 +3,9 @@
 /*.certSigningRequest
 /*.mobileprovision
 
+fastlane/metadata/
+fastlane/screenshots/
+
 # Created by https://www.gitignore.io/api/vim,ruby,xcode,macos,windows,fastlane,cocoapods
 # Edit at https://www.gitignore.io/?templates=vim,ruby,xcode,macos,windows,fastlane,cocoapods
 
