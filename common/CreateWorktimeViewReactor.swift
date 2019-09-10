@@ -125,14 +125,16 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                     ))
                 case let (.some(beginTime), .some(endTime)):
                     let preference = self.dependency.preference
-                    guard let calendarID = preference.selectedCalendarID,
-                          let name = preference.googleUser?.name else {
+                    guard let calendarID = preference.selectedCalendarID else {
                         return .just(.setErrorMessage("캘린더 정보를 불러오는 데 실패했습니다. 앱을 열어서 다시 설정해주세요."))
+                    }
+                    guard let eventTitle = preference.eventTitle, !eventTitle.isEmpty else {
+                        return .just(.setErrorMessage("오류: 앱을 열어서 일정 제목을 설정해주세요."))
                     }
 
                     let event = Event(
                         id: nil,
-                        summary: name,
+                        summary: eventTitle,
                         start: .dateTime(beginTime),
                         end: .dateTime(endTime)
                     )

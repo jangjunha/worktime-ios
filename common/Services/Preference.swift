@@ -20,6 +20,7 @@ class Preference {
         static let gidProfileName = "GID_PROFILE_NAME"
 
         static let selectedCalendarID = "SELECTED_CALENDAR_ID"
+        static let eventTitle = "EVENT_TITLE"
 
         static let scheduledNotificationTime = "SCHEDULED_NOTIFICATION_TIME"
     }
@@ -70,6 +71,15 @@ class Preference {
         }
     }
 
+    var eventTitle: String? {
+        get {
+            return self.userDefaults.string(forKey: Key.eventTitle)
+        }
+        set(newValue) {
+            self.userDefaults.set(newValue, forKey: Key.eventTitle)
+        }
+    }
+
     // 0시 0분 0초 부터 초단위 시간
     var scheduledNotificationTime: Int? {
         get {
@@ -117,6 +127,14 @@ extension Reactive where Base: Preference {
         let source = self.base.userDefaults.rx.observe(String.self, Preference.Key.selectedCalendarID)
         let binder = Binder(self.base) { (base, value) in
             base.selectedCalendarID = value
+        }
+        return ControlProperty(values: source, valueSink: binder)
+    }
+
+    var eventTitle: ControlProperty<String?> {
+        let source = self.base.userDefaults.rx.observe(String.self, Preference.Key.eventTitle)
+        let binder = Binder(self.base) { (base, value) in
+            base.eventTitle = value
         }
         return ControlProperty(values: source, valueSink: binder)
     }

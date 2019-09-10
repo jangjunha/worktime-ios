@@ -69,6 +69,12 @@ class SettingsViewController: BaseViewController, FactoryModule {
     let selectedCalendarCell = UITableViewCell().then {
         $0.accessoryType = .disclosureIndicator
     }
+    let eventTitleCell = UITableViewCell().then {
+        $0.selectionStyle = .none
+    }
+    let eventTitleField = UITextField().then {
+        $0.placeholder = "일정 제목 (필수)"
+    }
     let notificationScheduleCell = UITableViewCell(style: .value1, reuseIdentifier: nil).then {
         $0.textLabel?.text = "알림 시각"
         $0.accessoryType = .disclosureIndicator
@@ -112,6 +118,10 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     let cell = self.selectedCalendarCell
                     cell.textLabel?.text = calendarID
                     return cell
+                case let .eventTitle(title, isEnabled):
+                    self.eventTitleField.text = title
+                    self.eventTitleField.isEnabled = isEnabled
+                    return self.eventTitleCell
                 case let .notification(time, isEnabled):
                     let cell = self.notificationScheduleCell
                     cell.textLabel?.textColor = isEnabled ? .black : .lightGray
@@ -150,13 +160,27 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
         let selectedCalendarSection = Observable.combineLatest(
             self.preference.rx.selectedCalendarID,
+            self.preference.rx.eventTitle
+                .withLatestFrom(self.eventTitleField.rx.text) { ($0, $1) }
+                .map { ($0.0 ?? "", $0.1 ?? "") }
+                .filter { $0.0 != $0.1 }
+                .map { $0.0 },
             self.preference.rx.googleUser
         )
-            .map { id, user -> [SettingsTableRow] in
-                guard let id = id else {
-                    return [.selectCalendar(isEnabled: user != nil)]
+            .map { calendarID, eventTitle, user -> [SettingsTableRow] in
+                let isEnabled = user != nil
+
+                let calendarSelectionRow: SettingsTableRow
+                if let calendarID = calendarID {
+                    calendarSelectionRow = .selectedCalendar(calendarID: calendarID)
+                } else {
+                    calendarSelectionRow = .selectCalendar(isEnabled: isEnabled)
                 }
-                return [.selectedCalendar(calendarID: id)]
+
+                return [
+                    calendarSelectionRow,
+                    .eventTitle(title: eventTitle, isEnabled: isEnabled)
+                ]
             }
             .map { SettingsTableSectionModel(title: "캘린더", items: $0) }
 
@@ -230,6 +254,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                         }
                     }
                 case .selectCalendar(isEnabled: false),
+                     .eventTitle,
                      .notification(_, isEnabled: false),
                      .notifyNow(isEnabled: false),
                      .profile:
@@ -278,6 +303,11 @@ class SettingsViewController: BaseViewController, FactoryModule {
                 self?.tableView.deselectRow(at: indexPath, animated: true)
             })
             .disposed(by: self.disposeBag)
+
+        self.eventTitleField
+            .rx.text.changed
+            .bind(to: self.preference.rx.eventTitle)
+            .disposed(by: self.disposeBag)
     }
 
     required convenience init?(coder aDecoder: NSCoder) {
@@ -291,6 +321,8 @@ class SettingsViewController: BaseViewController, FactoryModule {
         self.view = UIView()
         self.view.backgroundColor = .white
         self.view.addSubview(self.tableView)
+
+        self.eventTitleCell.addSubview(self.eventTitleField)
     }
 
     override func setupConstraints() {
@@ -313,6 +345,7 @@ enum SettingsTableRow {
     // Calendar
     case selectCalendar(isEnabled: Bool)
     case selectedCalendar(calendarID: String)
+    case eventTitle(title: String, isEnabled: Bool)
 
     // Notification
     case notification(time: Int?, isEnabled: Bool)
