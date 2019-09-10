@@ -26,6 +26,8 @@ target 'worktime' do
   common_pods
 
   pod 'GoogleSignIn'
+
+  pod 'RxKeyboard'
 end
 
 target 'worktime-noti-content' do

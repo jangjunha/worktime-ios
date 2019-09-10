@@ -35,6 +35,9 @@ PODS:
     - Differentiator (~> 4.0)
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
+  - RxKeyboard (1.0.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxRelay (5.0.0):
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
@@ -61,6 +64,7 @@ DEPENDENCIES:
   - ReactorKit
   - RxCocoa (~> 5.0)
   - RxDataSources (~> 4.0)
+  - RxKeyboard
   - RxSwift (~> 5.0)
   - RxSwiftExt (~> 5.0)
   - RxViewController
@@ -81,6 +85,7 @@ SPEC REPOS:
     - ReactorKit
     - RxCocoa
     - RxDataSources
+    - RxKeyboard
     - RxRelay
     - RxSwift
     - RxSwiftExt
@@ -101,6 +106,7 @@ SPEC CHECKSUMS:
   ReactorKit: a63c5e11e0fd32d59d672e54178b0ed2876b764b
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
+  RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   RxSwiftExt: 4564187392cc53823ef241fa4a11647861567026
@@ -109,6 +115,6 @@ SPEC CHECKSUMS:
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
   Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
 
-PODFILE CHECKSUM: 7f79fd6e47ba6058c676a55534eff4a35c870f30
+PODFILE CHECKSUM: f9127261247cfab7c4e32afcbbccab754fad638d
 
 COCOAPODS: 1.7.5
