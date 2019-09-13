@@ -6,5 +6,9 @@
 	<array>
 		<string>group.kr.heek.worktime</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)kr.heek.worktime</string>
+	</array>
 </dict>
 </plist>

@@ -19,6 +19,8 @@ def common_pods
   pod 'Alamofire', '~> 5.0.0-beta.7'
   pod 'Moya/RxSwift', '~> 14.0.0-alpha.2'
 
+  pod 'KeychainAccess', '~> 3.2.0'
+
   pod 'SwiftLint', :configurations => ['Debug']
 end
 

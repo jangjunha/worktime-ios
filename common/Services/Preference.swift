@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainAccess
 import RxSwift
 import RxCocoa
 
@@ -26,18 +27,21 @@ class Preference {
     }
 
     fileprivate let userDefaults: UserDefaults
+    fileprivate let keychain: Keychain
 
-    init(userDefaults: UserDefaults) {
+    init(userDefaults: UserDefaults, keychain: Keychain) {
         self.userDefaults = userDefaults
+        self.keychain = keychain
     }
 
+    fileprivate let googleUserUpdated = BehaviorSubject(value: ())
     var googleUser: GoogleUser? {
         get {
-            guard let accessToken = self.userDefaults.string(forKey: Key.gidAuthAccessToken),
+            guard let accessToken = try? self.keychain.get(Key.gidAuthAccessToken),
                   let accessTokenExpirationDate = self.userDefaults.string(
                     forKey: Key.gidAuthAccessTokenExpirationDate
                   )?.date,
-                  let refreshToken = self.userDefaults.string(forKey: Key.gidAuthRefreshToken),
+                  let refreshToken = try? self.keychain.get(Key.gidAuthRefreshToken),
                   let email = self.userDefaults.string(forKey: Key.gidProfileEmail),
                   let name = self.userDefaults.string(forKey: Key.gidProfileName) else {
                 return nil
@@ -51,14 +55,19 @@ class Preference {
             )
         }
         set(newValue) {
-            self.userDefaults.set(newValue?.accessToken, forKey: Key.gidAuthAccessToken)
+            do {
+                try self.updateKeychain(value: newValue?.accessToken, key: Key.gidAuthAccessToken)
+                try self.updateKeychain(value: newValue?.refreshToken, key: Key.gidAuthRefreshToken)
+            } catch {
+                assertionFailure("Failed to update keychain")
+            }
             self.userDefaults.set(
                 newValue?.accessTokenExpirationDate.isoFormat,
                 forKey: Key.gidAuthAccessTokenExpirationDate
             )
-            self.userDefaults.set(newValue?.refreshToken, forKey: Key.gidAuthRefreshToken)
             self.userDefaults.set(newValue?.email, forKey: Key.gidProfileEmail)
             self.userDefaults.set(newValue?.name, forKey: Key.gidProfileName)
+            self.googleUserUpdated.onNext(())
         }
     }
 
@@ -89,34 +98,22 @@ class Preference {
             self.userDefaults.set(newValue, forKey: Key.scheduledNotificationTime)
         }
     }
+
+    private func updateKeychain(value: String?, key: String) throws {
+        if let value = value {
+            try self.keychain.set(value, key: key)
+        } else {
+            try self.keychain.remove(key)
+        }
+    }
 }
 
 extension Preference: ReactiveCompatible {}
 
 extension Reactive where Base: Preference {
     var googleUser: ControlProperty<GoogleUser?> {
-        let source = Observable.combineLatest(
-            self.base.userDefaults.rx.observe(String.self, Preference.Key.gidAuthAccessToken),
-            self.base.userDefaults.rx.observe(String.self, Preference.Key.gidAuthAccessTokenExpirationDate),
-            self.base.userDefaults.rx.observe(String.self, Preference.Key.gidAuthRefreshToken),
-            self.base.userDefaults.rx.observe(String.self, Preference.Key.gidProfileEmail),
-            self.base.userDefaults.rx.observe(String.self, Preference.Key.gidProfileName)
-        ).map { accessToken, accessTokenExpirationDate, refreshToken, email, name -> GoogleUser? in
-            guard let accessToken = accessToken,
-                  let accessTokenExpirationDate = accessTokenExpirationDate?.date,
-                  let refreshToken = refreshToken,
-                  let email = email,
-                  let name = name else {
-                return nil
-            }
-            return GoogleUser(
-                accessToken: accessToken,
-                accessTokenExpirationDate: accessTokenExpirationDate,
-                refreshToken: refreshToken,
-                email: email,
-                name: name
-            )
-        }
+        let source = self.base.googleUserUpdated
+            .map { self.base.googleUser }
         let binder = Binder(self.base) { (base, value) in
             base.googleUser = value
         }
