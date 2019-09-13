@@ -338,7 +338,9 @@
 				9136FDB073CE3FE5E5749F32 /* [CP] Check Pods Manifest.lock */,
 				C333DE4B22EAA991009418CE /* Sources */,
 				C333DE4C22EAA991009418CE /* Frameworks */,
+				3C7EECF32327FD7000DAA1B1 /* [Carte] Pre Script */,
 				C333DE4D22EAA991009418CE /* Resources */,
+				3C7EECF42327FD7500DAA1B1 /* [Carte] Post Script */,
 				CC32DACD1C5A74FDD682E643 /* [CP] Embed Pods Frameworks */,
 				C333DE7A22EAAAA4009418CE /* Embed App Extensions */,
 				E7C745249606D2B7C1720E8E /* [CP] Copy Pods Resources */,
@@ -475,6 +477,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		3C7EECF32327FD7000DAA1B1 /* [Carte] Pre Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Carte] Pre Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/scripts/rvm-carte.sh pre\n";
+		};
+		3C7EECF42327FD7500DAA1B1 /* [Carte] Post Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Carte] Post Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/scripts/rvm-carte.sh post\n";
 		};
 		3CC2167823242F0A00C21A3F /* Lint */ = {
 			isa = PBXShellScriptBuildPhase;

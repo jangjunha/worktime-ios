@@ -27,6 +27,7 @@ end
 target 'worktime' do
   common_pods
 
+  pod 'Carte'
   pod 'GoogleSignIn'
 
   pod 'RxKeyboard'

@@ -6,11 +6,13 @@
 //  Copyright © 2019 heek.kr. All rights reserved.
 //
 
+import Carte
 import GoogleSignIn
 import Pure
 import RxSwift
 import RxDataSources
 import RxKeyboard
+import SafariServices
 import SnapKit
 import Then
 import UIKit
@@ -83,6 +85,14 @@ class SettingsViewController: BaseViewController, FactoryModule {
     let notifyNowCell = UITableViewCell().then {
         $0.textLabel?.text = "지금 알림 받아보기"
     }
+    let appInformationCell = UITableViewCell().then {
+        $0.textLabel?.text = "Worktime 정보"
+        $0.accessoryType = .disclosureIndicator
+    }
+    let openSourceLicenseCell = UITableViewCell().then {
+        $0.textLabel?.text = "오픈소스 라이센스"
+        $0.accessoryType = .disclosureIndicator
+    }
 
 
     // MARK: Initialize
@@ -139,6 +149,10 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     cell.textLabel?.textColor = isEnabled ? .black : .lightGray
                     cell.selectionStyle = isEnabled ? .default : .none
                     return cell
+                case .appInformation:
+                    return self.appInformationCell
+                case .openSourceLicense:
+                    return self.openSourceLicenseCell
                 }
             },
             titleForHeaderInSection: { dataSource, index in
@@ -203,12 +217,20 @@ class SettingsViewController: BaseViewController, FactoryModule {
             }
             .map { SettingsTableSectionModel(title: "알림", items: $0) }
 
+        let informationSection = Observable.just(
+            SettingsTableSectionModel(title: "정보", items: [
+                .appInformation,
+                .openSourceLicense
+            ])
+        )
+
         Observable.combineLatest(
             accountSection,
             selectedCalendarSection,
-            notificationSection
+            notificationSection,
+            informationSection
         )
-            .map { [$0, $1, $2] }
+            .map { [$0, $1, $2, $3] }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
 
@@ -260,6 +282,12 @@ class SettingsViewController: BaseViewController, FactoryModule {
                             return
                         }
                     }
+                case .appInformation:
+                    let viewController = SFSafariViewController(url: URL(string: "https://worktime.heek.kr/policy/")!)
+                    self.present(viewController, animated: true)
+                case .openSourceLicense:
+                    let viewController = CarteViewController()
+                    self.navigationController?.pushViewController(viewController, animated: true)
                 case .selectCalendar(isEnabled: false),
                      .eventTitle,
                      .notification(_, isEnabled: false),
@@ -357,6 +385,10 @@ enum SettingsTableRow {
     // Notification
     case notification(time: Int?, isEnabled: Bool)
     case notifyNow(isEnabled: Bool)
+
+    // Information
+    case appInformation
+    case openSourceLicense
 }
 
 struct SettingsTableSectionModel {
