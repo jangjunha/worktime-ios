@@ -84,7 +84,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         switch action {
         case .refreshToken:
             guard let googleUser = self.dependency.preference.googleUser else {
-                return .empty()
+                return .just(.setErrorMessage("오류: 앱을 열어서 다시 로그인해주세요."))
             }
             let refreshToken = self.dependency.googleProvider
                 .rx.request(.refreshToken(
