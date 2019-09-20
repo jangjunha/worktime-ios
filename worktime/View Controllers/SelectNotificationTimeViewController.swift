@@ -47,6 +47,15 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
         $0.bounces = false
     }
 
+    let switchCell = UITableViewCell().then {
+        $0.textLabel?.text = Constant.receiveNotificationText
+        $0.selectionStyle = .none
+    }
+
+    let pickerCell = UITableViewCell().then {
+        $0.selectionStyle = .none
+    }
+
     let notificationSwitch = UISwitch(frame: .zero)
 
     let datePicker = UIDatePicker(frame: .zero).then {
@@ -158,10 +167,20 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
     override func loadView() {
         self.view = UIView()
         self.view.addSubview(self.tableView)
+
+        self.switchCell.contentView.addSubview(self.notificationSwitch)
+        self.pickerCell.contentView.addSubview(self.datePicker)
     }
 
     override func setupConstraints() {
         self.tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        self.notificationSwitch.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
+        }
+        self.datePicker.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -190,27 +209,15 @@ extension SelectNotificationTimeViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(frame: .zero)
-        cell.selectionStyle = .none
-
         switch indexPath {
         case IndexPath(row: 0, section: 0):
-            cell.textLabel?.text = Constant.receiveNotificationText
-            cell.contentView.addSubview(self.notificationSwitch)
-            self.notificationSwitch.snp.makeConstraints { make in
-                make.centerY.equalToSuperview()
-                make.trailing.equalToSuperview().inset(16)
-            }
+            return self.switchCell
         case IndexPath(row: 1, section: 0):
-            cell.contentView.addSubview(self.datePicker)
-            self.datePicker.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
+            return self.pickerCell
         default:
             assertionFailure("Unhandled cell")
+            return UITableViewCell()
         }
-
-        return cell
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
