@@ -14,6 +14,8 @@ import RxCocoa
 
 class Preference {
     enum Key {
+        static let preferenceVersion = "PREFERENCE_VERSION"
+
         static let gidAuthAccessToken = "GID_AUTH_ACCESS_TOKEN"
         static let gidAuthAccessTokenExpirationDate = "GID_AUTH_ACCESS_TOKEN_EXPIRATION_DATE"
         static let gidAuthRefreshToken = "GID_AUTH_REFRESH_TOKEN"
@@ -34,6 +36,17 @@ class Preference {
     init(userDefaults: UserDefaults, keychain: Keychain) {
         self.userDefaults = userDefaults
         self.keychain = keychain
+
+        self.migrate()
+    }
+
+    private var version: Int {
+        get {
+            return self.userDefaults.integer(forKey: Key.preferenceVersion)  // Defaults 0
+        }
+        set(newValue) {
+            self.userDefaults.set(newValue, forKey: Key.preferenceVersion)
+        }
     }
 
     fileprivate let googleUserUpdated = BehaviorSubject(value: ())
@@ -121,6 +134,31 @@ class Preference {
             try self.keychain.set(value, key: key)
         } else {
             try self.keychain.remove(key)
+        }
+    }
+
+    private func migrate() {
+        // WARN: Please update latest version when new revision added
+        let latestVersion = 2
+
+        let isV1 = self.userDefaults.string(forKey: "GID_AUTH_ACCESS_TOKEN") != nil
+        if self.version == 0, !isV1 {
+            self.version = latestVersion
+        }
+
+        // WARN: Please note the order of migrations
+        if self.version < 2 {
+            try? self.updateKeychain(
+                value: self.userDefaults.string(forKey: "GID_AUTH_ACCESS_TOKEN"),
+                key: "GID_AUTH_ACCESS_TOKEN"
+            )
+            try? self.updateKeychain(
+                value: self.userDefaults.string(forKey: "GID_AUTH_REFRESH_TOKEN"),
+                key: "GID_AUTH_REFRESH_TOKEN"
+            )
+            self.userDefaults.removeObject(forKey: "GID_AUTH_ACCESS_TOKEN")
+            self.userDefaults.removeObject(forKey: "GID_AUTH_REFRESH_TOKEN")
+            self.version = 2
         }
     }
 }
