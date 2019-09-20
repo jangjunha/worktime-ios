@@ -34,6 +34,8 @@
 		3CC216C02324DCF900C21A3F /* GoogleLoginServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */; };
 		3CC216C12324DD0400C21A3F /* GoogleLoginServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */; };
 		3CC216C42324DE0900C21A3F /* GoogleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC216C32324DE0900C21A3F /* GoogleLoginService.swift */; };
+		3CD592A9233539EE00FBAEFF /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD592A8233539EE00FBAEFF /* PaddedTextField.swift */; };
+		3CD592AA233539F300FBAEFF /* PaddedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD592A8233539EE00FBAEFF /* PaddedTextField.swift */; };
 		3CE9E5972322AE4E003EC279 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9E5962322AE4E003EC279 /* SettingsViewController.swift */; };
 		3CE9E5992322C7A8003EC279 /* SelectNotificationTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9E5982322C7A8003EC279 /* SelectNotificationTimeViewController.swift */; };
 		3CFF35382324E25700B6448A /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFF35372324E25600B6448A /* AppDependency.swift */; };
@@ -104,6 +106,7 @@
 		3CC216BB2324DC2300C21A3F /* StubAppDependencyResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubAppDependencyResolver.swift; sourceTree = "<group>"; };
 		3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginServiceType.swift; sourceTree = "<group>"; };
 		3CC216C32324DE0900C21A3F /* GoogleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginService.swift; sourceTree = "<group>"; };
+		3CD592A8233539EE00FBAEFF /* PaddedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedTextField.swift; sourceTree = "<group>"; };
 		3CE9E5962322AE4E003EC279 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		3CE9E5982322C7A8003EC279 /* SelectNotificationTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNotificationTimeViewController.swift; sourceTree = "<group>"; };
 		3CFF35372324E25600B6448A /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
@@ -208,6 +211,14 @@
 			path = worktimeUITests;
 			sourceTree = "<group>";
 		};
+		3CD592A7233539D900FBAEFF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3CD592A8233539EE00FBAEFF /* PaddedTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3CFF35352324DF0600B6448A /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				3C97102D2321657E00C0A2D8 /* CommonDependency.swift */,
+				3CD592A7233539D900FBAEFF /* Views */,
 				3CC2167523242E5500C21A3F /* View Controllers */,
 				3CFF35352324DF0600B6448A /* Services */,
 				3CC2167723242E7400C21A3F /* Networking */,
@@ -637,6 +649,7 @@
 				3C9E09DF2321333100DBC21A /* AppDependencyResolver.swift in Sources */,
 				3C9E09E423213BFC00DBC21A /* Preference.swift in Sources */,
 				3CC216C02324DCF900C21A3F /* GoogleLoginServiceType.swift in Sources */,
+				3CD592A9233539EE00FBAEFF /* PaddedTextField.swift in Sources */,
 				3CC2167123241E2B00C21A3F /* CreateWorktimeViewReactor.swift in Sources */,
 				3CC216C42324DE0900C21A3F /* GoogleLoginService.swift in Sources */,
 				3CFF35382324E25700B6448A /* AppDependency.swift in Sources */,
@@ -656,6 +669,7 @@
 				3CC2167E2324421700C21A3F /* NotificationService.swift in Sources */,
 				3C9E09EC2321452E00DBC21A /* StringExtension.swift in Sources */,
 				3C97102F2321658900C0A2D8 /* CommonDependency.swift in Sources */,
+				3CD592AA233539F300FBAEFF /* PaddedTextField.swift in Sources */,
 				3CC2166D2323E85500C21A3F /* CreateWorktimeViewReactor.swift in Sources */,
 				3C971030232165C100C0A2D8 /* GoogleAPI.swift in Sources */,
 				3CC216C12324DD0400C21A3F /* GoogleLoginServiceType.swift in Sources */,
