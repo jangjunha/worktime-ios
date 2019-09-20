@@ -150,6 +150,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                 case let .eventTitle(title, isEnabled):
                     self.eventTitleField.text = title
                     self.eventTitleField.isEnabled = isEnabled
+                    self.eventTitleField.textColor = isEnabled ? .black : .lightGray
                     return self.eventTitleCell
                 case let .notification(time, notifiedBefore, isEnabled):
                     let cell = self.notificationScheduleCell
