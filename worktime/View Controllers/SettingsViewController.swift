@@ -57,6 +57,10 @@ class SettingsViewController: BaseViewController, FactoryModule {
         }
     }
 
+    enum Metric {
+        static let eventTitleFieldContentInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+    }
+
 
     // MARK: Properties
 
@@ -93,8 +97,9 @@ class SettingsViewController: BaseViewController, FactoryModule {
     let eventTitleCell = UITableViewCell().then {
         $0.selectionStyle = .none
     }
-    let eventTitleField = UITextField().then {
+    let eventTitleField = PaddedTextField().then {
         $0.placeholder = "일정 제목 (필수)"
+        $0.contentInsets = Metric.eventTitleFieldContentInsets
     }
     let notificationScheduleCell = UITableViewCell(style: .value1, reuseIdentifier: nil).then {
         $0.textLabel?.text = "알림 시각"
@@ -403,7 +408,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
         }
 
         self.eventTitleField.snp.makeConstraints { make in
-            make.edges.equalTo(self.eventTitleCell.snp.margins)
+            make.edges.equalToSuperview()
         }
     }
 }
