@@ -56,6 +56,11 @@ class worktimeUITests: XCTestCase {
         worktimeCalendarRow.tap()
         app.navigationBars.buttons.element(boundBy: 0).tap()  // back
 
+        let eventTitleField = app.textFields["일정 제목 필드"]
+        self.waitForElementToAppear(element: eventTitleField)
+        eventTitleField.tap()
+        eventTitleField.typeText("junha\n")
+
         let notificationScheduleButton = app.tables.staticTexts["알림 시각"]
         self.waitForElementToAppear(element: notificationScheduleButton)
         notificationScheduleButton.tap()
@@ -66,6 +71,13 @@ class worktimeUITests: XCTestCase {
         app.navigationBars.buttons.element(boundBy: 0).tap()  // back
 
         self.waitForElementToAppear(element: logoutButton)
+        if #available(iOS 13, *) {
+            springboard.statusBars.firstMatch.tap()
+        } else {
+            app.statusBars.firstMatch.tap()
+        }
+        precondition(eventTitleField.value as? String == "junha")
+        sleep(2)
         snapshot("00-Settings")
 
         let notifyNowButton = app.tables.staticTexts["지금 알림 받아보기"]
