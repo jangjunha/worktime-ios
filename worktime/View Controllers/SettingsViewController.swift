@@ -192,14 +192,9 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
         let selectedCalendarSection = Observable.combineLatest(
             self.preference.rx.selectedCalendar,
-            self.preference.rx.eventTitle
-                .withLatestFrom(self.eventTitleField.rx.text) { ($0, $1) }
-                .map { ($0.0 ?? "", $0.1 ?? "") }
-                .filter { $0.0 != $0.1 }
-                .map { $0.0 },
             self.preference.rx.googleUser
         )
-            .map { calendar, eventTitle, user -> [SettingsTableRow] in
+            .map { calendar, user -> [SettingsTableRow] in
                 let isEnabled = user != nil
 
                 let calendarSelectionRow: SettingsTableRow
@@ -209,12 +204,23 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     calendarSelectionRow = .selectCalendar(isEnabled: isEnabled)
                 }
 
-                return [
-                    calendarSelectionRow,
-                    .eventTitle(title: eventTitle, isEnabled: isEnabled)
-                ]
+                return [calendarSelectionRow]
             }
             .map { SettingsTableSectionModel(title: "캘린더", items: $0) }
+
+        let eventSection = Observable.combineLatest(
+            self.preference.rx.eventTitle
+                .withLatestFrom(self.eventTitleField.rx.text) { ($0, $1) }
+                .map { ($0.0 ?? "", $0.1 ?? "") }
+                .filter { $0.0 != $0.1 }
+                .map { $0.0 },
+            self.preference.rx.googleUser
+        )
+            .map { eventTitle, user -> [SettingsTableRow] in
+                let isEnabled = user != nil
+                return [.eventTitle(title: eventTitle, isEnabled: isEnabled)]
+            }
+            .map { SettingsTableSectionModel(title: "일정 제목", items: $0) }
 
         let notificationSection = Observable.combineLatest(
             self.preference.rx.scheduledNotificationTime,
@@ -246,10 +252,11 @@ class SettingsViewController: BaseViewController, FactoryModule {
         Observable.combineLatest(
             accountSection,
             selectedCalendarSection,
+            eventSection,
             notificationSection,
             informationSection
         )
-            .map { [$0, $1, $2, $3] }
+            .map { [$0, $1, $2, $3, $4] }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
 
