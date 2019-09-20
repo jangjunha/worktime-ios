@@ -298,7 +298,13 @@ class SettingsViewController: BaseViewController, FactoryModule {
                         }
                     }
                 case .appInformation:
-                    let viewController = SFSafariViewController(url: URL(string: "https://worktime.heek.kr/policy/")!)
+                    let configuration = SFSafariViewController.Configuration().then {
+                        $0.entersReaderIfAvailable = true
+                    }
+                    let viewController = SFSafariViewController(
+                        url: URL(string: "https://worktime.heek.kr/policy/")!,
+                        configuration: configuration
+                    )
                     self.present(viewController, animated: true)
                 case .openSourceLicense:
                     let viewController = CarteViewController()
