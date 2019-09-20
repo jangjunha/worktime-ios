@@ -23,6 +23,38 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
     struct Payload {}
 
 
+    // MARK: Types
+
+    enum Weekday: Int, CaseIterable {
+        case monday = 1
+        case tuesday = 2
+        case wednesday = 3
+        case thursday = 4
+        case friday = 5
+        case saturday = 6
+        case sunday = 7
+
+        var notificationIdentifier: String {
+            return String(
+                format: NotificationService.Constant.scheduledNotificationIdentifierFormat,
+                self.rawValue
+            )
+        }
+
+        static let weekdays: [Weekday] = [.monday, .tuesday, .wednesday, .thursday, .friday]
+
+        static func + (left: Weekday, right: Int) -> Weekday {
+            var raw = (left.rawValue - 1 + right) % Weekday.allCases.count + 1
+            raw = raw > 0 ? raw : raw + Weekday.allCases.count
+            return Weekday(rawValue: raw)!
+        }
+
+        static func - (left: Weekday, right: Int) -> Weekday {
+            return left + (-right)
+        }
+    }
+
+
     // MARK: Constants
 
     enum Constant {
@@ -111,47 +143,12 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
                     return
                 }
 
-                let weekdays = [2, 3, 4, 5, 6]  // MON - FRI
-                let weekdayIdentifierPairs = weekdays
-                    .map { (
-                        weekday: $0,
-                        identifier: String(
-                            format: NotificationService.Constant.scheduledNotificationIdentifierFormat,
-                            $0
-                        )
-                    ) }
                 self.userNotificationCenter.removePendingNotificationRequests(
-                    withIdentifiers: weekdayIdentifierPairs.map { $0.identifier }
+                    withIdentifiers: Weekday.allCases.map { $0.notificationIdentifier }
                 )
 
                 let hour = Int(time / 60)
                 let minute = time % 60
-                weekdayIdentifierPairs.forEach {
-                    let components = DateComponents(
-                        calendar: Calendar.current,
-                        hour: hour,
-                        minute: minute,
-                        weekday: $0.weekday
-                    )
-                    self.notificationService.registerNotification(
-                        identifier: $0.identifier,
-                        dateMatching: components,
-                        repeats: true
-                    ) { error in
-                        if let error = error {
-                            let alertController = UIAlertController(
-                                title: "오류",
-                                message: "알림을 등록하지 못했습니다. 설정 앱에서 Worktime 앱에 알림 권한이 있는지 확인해주세요.",
-                                preferredStyle: .alert
-                            )
-                            alertController.addAction(.init(
-                                title: "닫기",
-                                style: .default
-                            ))
-                            self.present(alertController, animated: true)
-                        }
-                    }
-                }
             })
             .bind(to: self.preference.rx.scheduledNotificationTime)
             .disposed(by: self.disposeBag)
