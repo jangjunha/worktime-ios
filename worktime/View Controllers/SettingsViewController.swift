@@ -174,7 +174,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
             .map { SettingsTableSectionModel(title: "연결된 계정", items: $0) }
 
         let selectedCalendarSection = Observable.combineLatest(
-            self.preference.rx.selectedCalendarID,
+            self.preference.rx.selectedCalendar,
             self.preference.rx.eventTitle
                 .withLatestFrom(self.eventTitleField.rx.text) { ($0, $1) }
                 .map { ($0.0 ?? "", $0.1 ?? "") }
@@ -182,12 +182,12 @@ class SettingsViewController: BaseViewController, FactoryModule {
                 .map { $0.0 },
             self.preference.rx.googleUser
         )
-            .map { calendarID, eventTitle, user -> [SettingsTableRow] in
+            .map { calendar, eventTitle, user -> [SettingsTableRow] in
                 let isEnabled = user != nil
 
                 let calendarSelectionRow: SettingsTableRow
-                if let calendarID = calendarID {
-                    calendarSelectionRow = .selectedCalendar(calendarID: calendarID)
+                if let calendar = calendar {
+                    calendarSelectionRow = .selectedCalendar(calendarName: calendar.name)
                 } else {
                     calendarSelectionRow = .selectCalendar(isEnabled: isEnabled)
                 }
@@ -201,12 +201,12 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
         let notificationSection = Observable.combineLatest(
             self.preference.rx.scheduledNotificationTime,
-            self.preference.rx.selectedCalendarID,
+            self.preference.rx.selectedCalendar,
             self.preference.rx.googleUser
         )
-            .map { time, calendarID, user in (
+            .map { time, calendar, user in (
                 time: time,
-                isEnabled: calendarID != nil && user != nil
+                isEnabled: calendar != nil && user != nil
             ) }
             .map { a -> [SettingsTableRow] in
                 let (time, isEnabled) = a
@@ -251,7 +251,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     self.googleLoginService.signIn()
                 case .signoutButton:
                     self.preference.googleUser = nil
-                    self.preference.selectedCalendarID = nil
+                    self.preference.selectedCalendar = nil
                     self.preference.scheduledNotificationTime = nil
                     self.googleLoginService.signOut()
                 case .selectCalendar(isEnabled: true),
@@ -379,7 +379,7 @@ enum SettingsTableRow {
 
     // Calendar
     case selectCalendar(isEnabled: Bool)
-    case selectedCalendar(calendarID: String)
+    case selectedCalendar(calendarName: String)
     case eventTitle(title: String, isEnabled: Bool)
 
     // Notification

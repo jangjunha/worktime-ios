@@ -66,7 +66,7 @@ extension GoogleLoginService: GIDSignInDelegate {
             return
         }
         self.preference.googleUser = nil
-        self.preference.selectedCalendarID = nil
+        self.preference.selectedCalendar = nil
         self.preference.scheduledNotificationTime = nil
     }
 }

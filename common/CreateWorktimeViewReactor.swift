@@ -125,7 +125,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                     ))
                 case let (.some(beginTime), .some(endTime)):
                     let preference = self.dependency.preference
-                    guard let calendarID = preference.selectedCalendarID else {
+                    guard let calendar = preference.selectedCalendar else {
                         return .just(.setErrorMessage("캘린더 정보를 불러오는 데 실패했습니다. 앱을 열어서 다시 설정해주세요."))
                     }
                     guard let eventTitle = preference.eventTitle, !eventTitle.isEmpty else {
@@ -139,7 +139,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                         end: .dateTime(endTime)
                     )
                     let createEvent = self.dependency.googleProvider
-                        .rx.request(.createEvent(calendarID: calendarID, event: event))
+                        .rx.request(.createEvent(calendarID: calendar.id, event: event))
                         .filterSuccessfulStatusCodes()
                         .do(onSuccess: { [weak self] response in
                             let data = try? response.mapJSON()

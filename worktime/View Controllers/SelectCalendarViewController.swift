@@ -69,13 +69,16 @@ class SelectCalendarViewController: BaseViewController, FactoryModule {
 
         Observable.combineLatest(
             self.rx.viewDidLoad.flatMap { _ in listCalendars },
-            self.preference.rx.selectedCalendarID
+            self.preference.rx.selectedCalendar
         ) { calendars, _ in calendars }
             .bind(to: self.tableView.rx.items(
                 cellIdentifier: Constant.calendarCellIdentifier
-            )) { _, model, cell in
+            )) { [weak self] _, model, cell in
+                guard let `self` = self else {
+                    return
+                }
                 cell.textLabel?.text = model.summary
-                cell.accessoryType = model.id == self.preference.selectedCalendarID ? .checkmark : .none
+                cell.accessoryType = model.id == self.preference.selectedCalendar?.id ? .checkmark : .none
             }
             .disposed(by: self.disposeBag)
 
@@ -86,8 +89,8 @@ class SelectCalendarViewController: BaseViewController, FactoryModule {
             .disposed(by: self.disposeBag)
 
         self.tableView.rx.modelSelected(CalendarListEntry.self)
-            .map { $0.id }
-            .bind(to: self.preference.rx.selectedCalendarID)
+            .map { CalendarInfo(id: $0.id, name: $0.summary) }
+            .bind(to: self.preference.rx.selectedCalendar)
             .disposed(by: self.disposeBag)
     }
 

@@ -21,6 +21,7 @@ class Preference {
         static let gidProfileName = "GID_PROFILE_NAME"
 
         static let selectedCalendarID = "SELECTED_CALENDAR_ID"
+        static let selectedCalendarName = "SELECTED_CALENDAR_NAME"
         static let eventTitle = "EVENT_TITLE"
 
         static let scheduledNotificationTime = "SCHEDULED_NOTIFICATION_TIME"
@@ -71,12 +72,17 @@ class Preference {
         }
     }
 
-    var selectedCalendarID: String? {
+    var selectedCalendar: CalendarInfo? {
         get {
-            return self.userDefaults.string(forKey: Key.selectedCalendarID)
+            guard let id = self.userDefaults.string(forKey: Key.selectedCalendarID),
+                  let name = self.userDefaults.string(forKey: Key.selectedCalendarName) else {
+                return nil
+            }
+            return CalendarInfo(id: id, name: name)
         }
         set(newValue) {
-            self.userDefaults.set(newValue, forKey: Key.selectedCalendarID)
+            self.userDefaults.set(newValue?.id, forKey: Key.selectedCalendarID)
+            self.userDefaults.set(newValue?.name, forKey: Key.selectedCalendarName)
         }
     }
 
@@ -120,10 +126,13 @@ extension Reactive where Base: Preference {
         return ControlProperty(values: source, valueSink: binder)
     }
 
-    var selectedCalendarID: ControlProperty<String?> {
-        let source = self.base.userDefaults.rx.observe(String.self, Preference.Key.selectedCalendarID)
+    var selectedCalendar: ControlProperty<CalendarInfo?> {
+        let source = Observable.combineLatest(
+            self.base.userDefaults.rx.observe(String.self, Preference.Key.selectedCalendarID),
+            self.base.userDefaults.rx.observe(String.self, Preference.Key.selectedCalendarName)
+        ).map { _ in self.base.selectedCalendar }
         let binder = Binder(self.base) { (base, value) in
-            base.selectedCalendarID = value
+            base.selectedCalendar = value
         }
         return ControlProperty(values: source, valueSink: binder)
     }
@@ -153,5 +162,10 @@ struct GoogleUser {
     let accessTokenExpirationDate: Date
     let refreshToken: String
     let email: String
+    let name: String
+}
+
+struct CalendarInfo {
+    let id: String
     let name: String
 }
