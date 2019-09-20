@@ -147,10 +147,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     let cell = self.selectedCalendarCell
                     cell.textLabel?.text = calendarID
                     return cell
-                case let .eventTitle(title, isEnabled):
-                    self.eventTitleField.text = title
-                    self.eventTitleField.isEnabled = isEnabled
-                    self.eventTitleField.textColor = isEnabled ? .black : .lightGray
+                case let .eventTitle:
                     return self.eventTitleCell
                 case let .notification(time, notifiedBefore, isEnabled):
                     let cell = self.notificationScheduleCell
@@ -208,19 +205,27 @@ class SettingsViewController: BaseViewController, FactoryModule {
             }
             .map { SettingsTableSectionModel(title: "캘린더", items: $0) }
 
-        let eventSection = Observable.combineLatest(
-            self.preference.rx.eventTitle
-                .withLatestFrom(self.eventTitleField.rx.text) { ($0, $1) }
-                .map { ($0.0 ?? "", $0.1 ?? "") }
-                .filter { $0.0 != $0.1 }
-                .map { $0.0 },
-            self.preference.rx.googleUser
+        self.preference.rx.eventTitle
+            .bind(to: self.eventTitleField.rx.text)
+            .disposed(by: self.disposeBag)
+
+        let eventTitleFieldEnabled = self.preference.rx.googleUser
+            .map { $0 != nil }
+
+        eventTitleFieldEnabled
+            .bind(to: self.eventTitleField.rx.isEnabled)
+            .disposed(by: self.disposeBag)
+
+        eventTitleFieldEnabled
+            .map { $0 ? .black : .lightGray }
+            .subscribe(onNext: { [weak self] color in
+                self?.eventTitleField.textColor = color
+            })
+            .disposed(by: self.disposeBag)
+
+        let eventSection = Observable.just(
+            SettingsTableSectionModel(title: "일정 제목", items: [.eventTitle])
         )
-            .map { eventTitle, user -> [SettingsTableRow] in
-                let isEnabled = user != nil
-                return [.eventTitle(title: eventTitle, isEnabled: isEnabled)]
-            }
-            .map { SettingsTableSectionModel(title: "일정 제목", items: $0) }
 
         let notificationSection = Observable.combineLatest(
             self.preference.rx.scheduledNotificationTime,
@@ -412,7 +417,7 @@ enum SettingsTableRow {
     // Calendar
     case selectCalendar(isEnabled: Bool)
     case selectedCalendar(calendarName: String)
-    case eventTitle(title: String, isEnabled: Bool)
+    case eventTitle
 
     // Notification
     case notification(time: Int?, notifiedBefore: Int, isEnabled: Bool)
