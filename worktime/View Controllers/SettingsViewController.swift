@@ -98,6 +98,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
         $0.selectionStyle = .none
     }
     let eventTitleField = PaddedTextField().then {
+        $0.accessibilityIdentifier = "일정 제목 필드"
         $0.placeholder = "일정 제목 (필수)"
         $0.contentInsets = Metric.eventTitleFieldContentInsets
     }
