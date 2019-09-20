@@ -98,7 +98,7 @@ class Preference {
     // 0시 0분 0초 부터 초단위 시간
     var scheduledNotificationTime: Int? {
         get {
-            return self.userDefaults.integer(forKey: Key.scheduledNotificationTime)
+            return self.userDefaults.object(forKey: Key.scheduledNotificationTime) as? Int
         }
         set(newValue) {
             self.userDefaults.set(newValue, forKey: Key.scheduledNotificationTime)
