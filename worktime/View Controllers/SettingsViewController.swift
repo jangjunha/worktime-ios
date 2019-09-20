@@ -170,6 +170,9 @@ class SettingsViewController: BaseViewController, FactoryModule {
             },
             titleForHeaderInSection: { dataSource, index in
                 return dataSource.sectionModels[index].title
+            },
+            titleForFooterInSection: { dataSource, index in
+                return dataSource.sectionModels[index].footerMessage
             }
         )
 
@@ -414,7 +417,19 @@ enum SettingsTableRow {
 
 struct SettingsTableSectionModel {
     var title: String?
+    var footerMessage: String?
     var items: [Item]
+
+    init(title: String? = nil, items: [Item]) {
+        self.title = title
+        self.items = items
+    }
+
+    init(title: String? = nil, footerMessage: String?, items: [Item]) {
+        self.title = title
+        self.footerMessage = footerMessage
+        self.items = items
+    }
 }
 
 extension SettingsTableSectionModel: SectionModelType {
