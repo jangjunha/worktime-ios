@@ -17,7 +17,17 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     // MARK: Constants
 
     enum Constant {
-        static let title = "오늘의 근무시간을 알려주세요!"
+        static let buildTitle = { (dayBefore: Int) -> String in
+            switch dayBefore {
+            case 0:
+                return "오늘의 근무시간을 알려주세요!"
+            case 1:
+                return "내일 언제 근무하시나요?"
+            default:
+                assertionFailure("Expects dayBefore is not nil")
+                return "근무시간을 알려주세요!"
+            }
+        }
     }
 
 
@@ -60,7 +70,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     // MARK: UNNotificationContentExtension
 
     func didReceive(_ notification: UNNotification) {
-        self.title = Constant.title
+        self.title = Constant.buildTitle(self.common.preference.notifiedBefore ?? 0)
         self.createWorktimeViewController.notificationIdentifier = notification.request.identifier
     }
 }

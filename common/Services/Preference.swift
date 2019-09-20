@@ -25,6 +25,7 @@ class Preference {
         static let eventTitle = "EVENT_TITLE"
 
         static let scheduledNotificationTime = "SCHEDULED_NOTIFICATION_TIME"
+        static let notifiedBefore = "NOTIFIED_BEFORE"
     }
 
     fileprivate let userDefaults: UserDefaults
@@ -105,6 +106,16 @@ class Preference {
         }
     }
 
+    // N일 전에 알림 보내기 (= N일 후 일정으로 등록)
+    var notifiedBefore: Int? {
+        get {
+            return self.userDefaults.object(forKey: Key.notifiedBefore) as? Int
+        }
+        set(newValue) {
+            self.userDefaults.set(newValue, forKey: Key.notifiedBefore)
+        }
+    }
+
     private func updateKeychain(value: String?, key: String) throws {
         if let value = value {
             try self.keychain.set(value, key: key)
@@ -149,6 +160,14 @@ extension Reactive where Base: Preference {
         let source = self.base.userDefaults.rx.observe(Int.self, Preference.Key.scheduledNotificationTime)
         let binder = Binder(self.base) { (base, value) in
             base.scheduledNotificationTime = value
+        }
+        return ControlProperty(values: source, valueSink: binder)
+    }
+
+    var notifiedBefore: ControlProperty<Int?> {
+        let source = self.base.userDefaults.rx.observe(Int.self, Preference.Key.notifiedBefore)
+        let binder = Binder(self.base) { (base, value) in
+            base.notifiedBefore = value
         }
         return ControlProperty(values: source, valueSink: binder)
     }

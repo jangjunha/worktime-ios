@@ -14,15 +14,27 @@ class NotificationService {
         static let scheduledNotificationIdentifierFormat = "notification-identifiers.worktime.heek.kr/"
                                                          + "scheduled/weekdays/%d"
         static let categoryIdentifier = "worktimeAlert"
-        static let notificationBody = "⏰ 오늘의 근무시간을 알려주세요!"
+        static let buildNotificationBody = { (dayBefore: Int) -> String in
+            switch dayBefore {
+            case 1:
+                return "내일 언제 근무하시나요?"
+            case 0:
+                return "오늘의 근무시간을 알려주세요!"
+            default:
+                return "근무시간을 알려주세요!"
+            }
+        }
     }
 
 
     let userNotificationCenter: UNUserNotificationCenter
 
+    let preference: Preference
 
-    init(userNotificationCenter: UNUserNotificationCenter) {
+
+    init(userNotificationCenter: UNUserNotificationCenter, preference: Preference) {
         self.userNotificationCenter = userNotificationCenter
+        self.preference = preference
     }
 
     func registerNotification(
@@ -35,7 +47,7 @@ class NotificationService {
             identifier: identifier,
             content: UNMutableNotificationContent().then {
                 $0.categoryIdentifier = Constant.categoryIdentifier
-                $0.body = Constant.notificationBody
+                $0.body = Constant.buildNotificationBody(self.preference.notifiedBefore ?? 0)
             },
             trigger: UNCalendarNotificationTrigger(
                 dateMatching: dateComponents,

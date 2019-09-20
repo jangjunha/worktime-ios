@@ -37,6 +37,24 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
     enum Constant {
         static let title = "근무시간"
+        static let buildNotifyTime = { (time: Int?, dayBefore: Int) -> String in
+            guard let time = time else {
+                return "꺼짐"
+            }
+            let dayDescription: String
+            switch dayBefore {
+            case 0:
+                dayDescription = "당일"
+            case 1:
+                dayDescription = "전날"
+            default:
+                dayDescription = "\(dayBefore)일 전"
+            }
+            return [
+                dayDescription,
+                String(format: "%02d:%02d", Int(time / 60), time % 60)
+            ].joined(separator: " ")
+        }
     }
 
 
@@ -133,15 +151,10 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     self.eventTitleField.text = title
                     self.eventTitleField.isEnabled = isEnabled
                     return self.eventTitleCell
-                case let .notification(time, isEnabled):
+                case let .notification(time, notifiedBefore, isEnabled):
                     let cell = self.notificationScheduleCell
                     cell.textLabel?.textColor = isEnabled ? .black : .lightGray
-                    cell.detailTextLabel?.text = { time in
-                        guard let time = time else {
-                            return "꺼짐"
-                        }
-                        return String(format: "평일 %02d:%02d", Int(time / 60), time % 60)
-                    }(time)
+                    cell.detailTextLabel?.text = Constant.buildNotifyTime(time, notifiedBefore)
                     cell.selectionStyle = isEnabled ? .default : .none
                     return cell
                 case let .notifyNow(isEnabled):
@@ -201,17 +214,19 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
         let notificationSection = Observable.combineLatest(
             self.preference.rx.scheduledNotificationTime,
+            self.preference.rx.notifiedBefore,
             self.preference.rx.selectedCalendar,
             self.preference.rx.googleUser
         )
-            .map { time, calendar, user in (
+            .map { time, notifiedBefore, calendar, user in (
                 time: time,
+                notifiedBefore: notifiedBefore ?? 0,
                 isEnabled: calendar != nil && user != nil
             ) }
             .map { a -> [SettingsTableRow] in
-                let (time, isEnabled) = a
+                let (time, notifiedBefore, isEnabled) = a
                 return [
-                    .notification(time: time, isEnabled: isEnabled),
+                    .notification(time: time, notifiedBefore: notifiedBefore, isEnabled: isEnabled),
                     .notifyNow(isEnabled: isEnabled)
                 ]
             }
@@ -258,7 +273,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                      .selectedCalendar:
                     let viewController = self.selectCalendarViewControllerFactory.create(payload: .init())
                     self.navigationController?.pushViewController(viewController, animated: true)
-                case .notification(_, isEnabled: true):
+                case .notification(_, _, isEnabled: true):
                     let viewController = self.selectNotificationTimeViewControllerFactory.create(payload: .init())
                     self.navigationController?.pushViewController(viewController, animated: true)
                 case .notifyNow(isEnabled: true):
@@ -290,7 +305,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     self.navigationController?.pushViewController(viewController, animated: true)
                 case .selectCalendar(isEnabled: false),
                      .eventTitle,
-                     .notification(_, isEnabled: false),
+                     .notification(_, _, isEnabled: false),
                      .notifyNow(isEnabled: false),
                      .profile:
                     break
@@ -383,7 +398,7 @@ enum SettingsTableRow {
     case eventTitle(title: String, isEnabled: Bool)
 
     // Notification
-    case notification(time: Int?, isEnabled: Bool)
+    case notification(time: Int?, notifiedBefore: Int, isEnabled: Bool)
     case notifyNow(isEnabled: Bool)
 
     // Information

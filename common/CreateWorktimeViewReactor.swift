@@ -115,10 +115,17 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
             let setButtons: Observable<Mutation> = {
                 switch (beginTime, endTime) {
                 case (.none, _):
-                    let base = type(of: self).normalize(date: Date())
-                    return .just(.setButtons(
-                        type(of: self).makeBeginButtons(base: base)
-                    ))
+                    let notifiedBefore = self.dependency.preference.notifiedBefore ?? 0
+                    let buttons: [Button]
+                    if notifiedBefore == 0 {
+                        let base = type(of: self).normalize(date: Date())
+                        buttons = type(of: self).makeBeginButtonsFromNow(base: base)
+                    } else {
+                        let calendar = Calendar.current
+                        let targetDay = calendar.date(byAdding: .day, value: notifiedBefore, to: Date()) ?? Date()
+                        buttons = type(of: self).makeBeginButtonsForFuture(targetDay: targetDay)
+                    }
+                    return .just(.setButtons(buttons))
                 case let (.some(beginTime), .none):
                     return .just(.setButtons(
                         type(of: self).makeEndButtons(beginDate: beginTime)
@@ -201,7 +208,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         ) ?? baseDate
     }
 
-    static func makeBeginButtons(base: Date) -> [Button] {
+    static func makeBeginButtonsFromNow(base: Date) -> [Button] {
         let calendar = Calendar.current
         let strict: [Button] = [(
             beginDate: calendar.date(bySettingHour: 10, minute: 0, second: 0, of: base) ?? base,
@@ -219,6 +226,20 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
             .map(base.addingTimeInterval)
             .map { (beginDate: $0, endDate: nil, style: .normal) }
         return strict + futures
+    }
+
+    static func makeBeginButtonsForFuture(targetDay: Date) -> [Button] {
+        let calendar = Calendar.current
+        return [
+            (9, 0, false),
+            (10, 0, true),
+            (10, 30, false),
+            (11, 0, false),
+            (15, 0, false)
+        ].map { hour, minute, highlight in
+            let begin = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: targetDay) ?? targetDay
+            return (beginDate: begin, endDate: nil, style: highlight ? .highlighted : .normal)
+        }
     }
 
     static func makeEndButtons(beginDate: Date) -> [Button] {

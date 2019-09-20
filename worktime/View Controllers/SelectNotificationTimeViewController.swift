@@ -59,7 +59,27 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
 
     enum Constant {
         static let title = "알림 설정"
-        static let description = "매일 평일 선택한 시간에 근무시간 공유 알림이 도착합니다."
+        static let buildDescription = { (time: Int?, dayBefore: Int) -> String in
+            guard let time = time else {
+                return "근무시간 공유 알림을 받지 않습니다."
+            }
+            let dateDescription: String?
+            switch dayBefore {
+            case 0:
+                dateDescription = "매 근무일"
+            case 1:
+                dateDescription = "매 근무일 전날"
+            default:
+                dateDescription = nil
+            }
+            return [
+                dateDescription,
+                "\(Int(time / 60))시 \(time % 60)분에",
+                "근무시간 공유 알림이 도착합니다."
+            ]
+                .compactMap { $0}
+                .joined(separator: " ")
+        }
         static let receiveNotificationText = "알림 받기"
         static let defaultTime = (9 * 60) + 0
         static let dateCellReuseIdentifier = "dateCell"
@@ -90,6 +110,8 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
 
     let notificationSwitch = UISwitch(frame: .zero)
 
+    let dayPicker = UIPickerView(frame: .zero)
+
     let datePicker = UIDatePicker(frame: .zero).then {
         $0.datePickerMode = .time
     }
@@ -107,16 +129,40 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
         self.title = Constant.title
         self.tableView.dataSource = self
 
+        let notifiedBeforeValues = [1, 0]
+
+        Observable.just(notifiedBeforeValues)
+            .bind(to: self.dayPicker.rx.items) { _, item, _ in
+                UILabel().then {
+                    $0.text = item == 0 ? "당일" : "\(item)일 전"
+                    $0.textAlignment = .right
+                    $0.font = .preferredFont(forTextStyle: .title2)
+                }
+            }
+            .disposed(by: self.disposeBag)
+
         self.preference
             .rx.scheduledNotificationTime
             .map { $0 != nil }
             .bind(to: self.notificationSwitch.rx.isOn)
             .disposed(by: self.disposeBag)
 
-        self.preference
+        let notificationEnabled = self.preference
             .rx.scheduledNotificationTime
             .map { $0 != nil }
+
+        notificationEnabled
             .bind(to: self.datePicker.rx.isEnabled)
+            .disposed(by: self.disposeBag)
+
+        notificationEnabled
+            .subscribe(onNext: { [weak self] isEnabled in
+                guard let `self` = self else {
+                    return
+                }
+                self.dayPicker.isUserInteractionEnabled = isEnabled
+                self.dayPicker.alpha = isEnabled ? 1 : 0.5
+            })
             .disposed(by: self.disposeBag)
 
         self.preference
@@ -124,6 +170,17 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
             .map { $0 ?? Constant.defaultTime }
             .map { type(of: self).convertToDate(from: $0) }
             .bind(to: self.datePicker.rx.value)
+            .disposed(by: self.disposeBag)
+
+        self.preference
+            .rx.notifiedBefore
+            .subscribe(onNext: { [weak self] item in
+                self?.dayPicker.selectRow(
+                    notifiedBeforeValues.firstIndex(of: item ?? 0) ?? 0,
+                    inComponent: 0,
+                    animated: false
+                )
+            })
             .disposed(by: self.disposeBag)
 
         self.notificationSwitch
@@ -138,7 +195,26 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
             .skipUntil(self.rx.viewWillAppear)
             .map { type(of: self).convertToTime(from: $0) }
             .distinctUntilChanged()
-            .do(onNext: { [weak self] time in
+            .bind(to: self.preference.rx.scheduledNotificationTime)
+            .disposed(by: self.disposeBag)
+
+        self.dayPicker
+            .rx.modelSelected(Int.self)
+            .map { items in
+                assert(items.count == 1, "Expected number of items is 1")
+                return items[0]
+            }
+            .bind(to: self.preference.rx.notifiedBefore)
+            .disposed(by: self.disposeBag)
+
+        Observable.combineLatest(
+            self.preference.rx.scheduledNotificationTime,
+            self.preference.rx.notifiedBefore
+                .map { $0 ?? 0 }
+        )
+            .skipUntil(self.rx.viewDidAppear)
+            .do(onNext: { [weak self] _ in self?.tableView.reloadData() })
+            .subscribe(onNext: { [weak self] time, notifiedBefore in
                 guard let `self` = self else {
                     return
                 }
@@ -147,10 +223,42 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
                     withIdentifiers: Weekday.allCases.map { $0.notificationIdentifier }
                 )
 
+                guard let time = time else {
+                    return
+                }
+
                 let hour = Int(time / 60)
                 let minute = time % 60
+                Weekday.weekdays
+                    .map { $0 - notifiedBefore }
+                    .forEach { weekday in
+                        let components = DateComponents(
+                            calendar: Calendar.current,
+                            hour: hour,
+                            minute: minute,
+                            weekday: weekday.rawValue
+                        )
+                        self.notificationService.registerNotification(
+                            identifier: weekday.notificationIdentifier,
+                            dateMatching: components,
+                            repeats: true
+                        ) { error in
+                            guard error == nil else {
+                                let alertController = UIAlertController(
+                                    title: "오류",
+                                    message: "알림을 등록하지 못했습니다. 설정 앱에서 Worktime 앱에 알림 권한이 있는지 확인해주세요.",
+                                    preferredStyle: .alert
+                                )
+                                alertController.addAction(.init(
+                                    title: "닫기",
+                                    style: .default
+                                ))
+                                self.present(alertController, animated: true)
+                                return
+                            }
+                        }
+                    }
             })
-            .bind(to: self.preference.rx.scheduledNotificationTime)
             .disposed(by: self.disposeBag)
     }
 
@@ -166,6 +274,7 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
         self.view.addSubview(self.tableView)
 
         self.switchCell.contentView.addSubview(self.notificationSwitch)
+        self.pickerCell.contentView.addSubview(self.dayPicker)
         self.pickerCell.contentView.addSubview(self.datePicker)
     }
 
@@ -177,8 +286,13 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(16)
         }
+        self.dayPicker.snp.makeConstraints { make in
+            make.top.bottom.leading.equalToSuperview()
+        }
         self.datePicker.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.trailing.equalToSuperview()
+            make.leading.equalTo(self.dayPicker.snp.trailing)
+            make.width.equalTo(self.dayPicker.snp.width).multipliedBy(3)
         }
     }
 
@@ -220,7 +334,10 @@ extension SelectNotificationTimeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case 0:
-            return Constant.description
+            return Constant.buildDescription(
+                self.preference.scheduledNotificationTime,
+                self.preference.notifiedBefore ?? 0
+            )
         default:
             assertionFailure("Unhandled section")
             return nil

@@ -30,11 +30,14 @@ struct CommonDependency {
 extension CommonDependency {
     static func resolve() -> CommonDependency {
         let keychain = Keychain(service: "kr.heek.worktime")
-        let userNotificationCenter = UNUserNotificationCenter.current()
-        let notificationService = NotificationService(userNotificationCenter: userNotificationCenter)
         let preference = Preference(
             userDefaults: UserDefaults(suiteName: "group.kr.heek.worktime")!,
             keychain: keychain
+        )
+        let userNotificationCenter = UNUserNotificationCenter.current()
+        let notificationService = NotificationService(
+            userNotificationCenter: userNotificationCenter,
+            preference: preference
         )
 
         let googleClientID = "1066855526531-mpbptb2kmdhkclq4sula8r1rofn2dakl.apps.googleusercontent.com"
@@ -65,11 +68,14 @@ extension CommonDependency {
 
     static func resolveForUITests() -> CommonDependency {
         let keychain = Keychain(service: "kr.heek.worktime")
-        let userNotificationCenter = UNUserNotificationCenter.current()
-        let notificationService = NotificationService(userNotificationCenter: userNotificationCenter)
         let preference = Preference(
             userDefaults: UserDefaults(suiteName: "group.kr.heek.worktime")!,
             keychain: keychain
+        )
+        let userNotificationCenter = UNUserNotificationCenter.current()
+        let notificationService = NotificationService(
+            userNotificationCenter: userNotificationCenter,
+            preference: preference
         )
 
         let googleClientID = "MOCK-CLIENT-ID"
