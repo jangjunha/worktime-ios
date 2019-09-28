@@ -427,10 +427,10 @@
 			};
 			buildConfigurationList = C333DE4A22EAA991009418CE /* Build configuration list for PBXProject "worktime" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				ko,
 				Base,
 			);
 			mainGroup = C333DE4622EAA991009418CE;
