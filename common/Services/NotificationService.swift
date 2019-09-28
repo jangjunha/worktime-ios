@@ -6,6 +6,7 @@
 //  Copyright © 2019 heek.kr. All rights reserved.
 //
 
+import UIKit
 import UserNotifications
 
 
@@ -41,6 +42,7 @@ class NotificationService {
         identifier: String,
         dateMatching dateComponents: DateComponents,
         repeats: Bool,
+        presentingViewController: UIViewController?,
         completion: @escaping (Error?) -> Void
     ) {
         let request = UNNotificationRequest(
@@ -54,6 +56,23 @@ class NotificationService {
                 repeats: repeats
             )
         )
-        self.userNotificationCenter.add(request, withCompletionHandler: completion)
+
+        self.userNotificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            guard granted, error == nil else {
+                let alertController = UIAlertController(
+                    title: "권한 없음",
+                    message: "권한을 부여하려면 설정 앱에서 알림을 허용해주세요.",
+                    preferredStyle: .alert
+                )
+                alertController.addAction(.init(
+                    title: "닫기",
+                    style: .default
+                ))
+                presentingViewController?.present(alertController, animated: true)
+                return
+            }
+
+            self.userNotificationCenter.add(request, withCompletionHandler: completion)
+        }
     }
 }
