@@ -72,6 +72,8 @@ extension CommonDependency {
             userDefaults: UserDefaults(suiteName: "group.kr.heek.worktime")!,
             keychain: keychain
         )
+        // 항상 오늘 근무시간 등록으로 나오도록 합니다.
+        preference.dateSeparatorHour = 24
         let userNotificationCenter = UNUserNotificationCenter.current()
         let notificationService = NotificationService(
             userNotificationCenter: userNotificationCenter,

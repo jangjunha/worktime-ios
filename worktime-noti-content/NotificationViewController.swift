@@ -35,7 +35,9 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
     lazy var createWorktimeViewController: CreateWorktimeViewController = {
         let viewController = self.common.createWorktimeViewControllerFactory.create(payload: .init(
-            reactor: self.common.createWorktimeViewReactorFactory.create(payload: .init())
+            reactor: self.common.createWorktimeViewReactorFactory.create(payload: .init(
+                dayBefore: self.dayBefore
+            ))
         ))
         viewController.delegate = self
         return viewController
@@ -43,6 +45,12 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
 
     // MARK: Properties
+
+    lazy var dayBefore: Int = {
+        let calendar = Calendar.current
+        let hour = calendar.dateComponents([.hour], from: Date()).hour ?? 0
+        return hour <= self.common.preference.dateSeparatorHour ? 0 : 1
+    }()
 
     let common = CommonDependency.resolve()
 
@@ -70,7 +78,7 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     // MARK: UNNotificationContentExtension
 
     func didReceive(_ notification: UNNotification) {
-        self.title = Constant.buildTitle(self.common.preference.notifiedBefore ?? 0)
+        self.title = Constant.buildTitle(self.dayBefore)
         self.createWorktimeViewController.notificationIdentifier = notification.request.identifier
     }
 }

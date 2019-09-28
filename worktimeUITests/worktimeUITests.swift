@@ -88,7 +88,7 @@ class worktimeUITests: XCTestCase {
         self.waitForElementToAppear(element: notification)
         notification.swipeDown()
 
-        let worktimeBeginLabel = springboard.staticTexts["언제 근무를 시작하시나요?"]
+        let worktimeBeginLabel = springboard.staticTexts["오늘 언제 근무를 시작하시나요?"]
         self.waitForElementToAppear(element: worktimeBeginLabel, timeout: 10)
 
         let strictBeginButton = springboard.buttons["10:00"]
@@ -97,7 +97,7 @@ class worktimeUITests: XCTestCase {
 
         strictBeginButton.tap()
 
-        let worktimeEndLabel = springboard.staticTexts["언제 근무를 종료하시나요?"]
+        let worktimeEndLabel = springboard.staticTexts["오늘 언제 근무를 종료하시나요?"]
         self.waitForElementToAppear(element: worktimeEndLabel)
 
         let strictEndButton = springboard.buttons["10:00 - 19:00 (9시간)"]
