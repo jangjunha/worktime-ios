@@ -44,7 +44,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         var shouldDismiss: Bool
         var errorMessage: String?
 
-        var times: (Date?, Date?)
+        var times: (Date?, Date?) = (nil, nil)
 
         var buttons: [Button]
         var dayBefore: Int
