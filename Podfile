@@ -16,8 +16,8 @@ def common_pods
   pod 'RxViewController'
   pod 'RxDataSources', '~> 4.0'
 
-  pod 'Alamofire', '~> 5.0.0-beta.7'
-  pod 'Moya/RxSwift', '~> 14.0.0-alpha.2'
+  pod 'Alamofire', '~> 5.0.0-rc.2'
+  pod 'Moya/RxSwift', '~> 14.0.0-beta.3'
 
   pod 'KeychainAccess', '~> 3.2.0'
 
