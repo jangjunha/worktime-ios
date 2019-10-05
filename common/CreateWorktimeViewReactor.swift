@@ -22,7 +22,9 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         let googleClientID: String
     }
 
-    struct Payload {}
+    struct Payload {
+        let dayBefore: Int
+    }
 
     enum Action {
         case refreshToken
@@ -42,20 +44,30 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         var shouldDismiss: Bool
         var errorMessage: String?
 
-        var times: (Date?, Date?)
+        var times: (Date?, Date?) = (nil, nil)
 
         var buttons: [Button]
+        var dayBefore: Int
 
         var title: String {
             if let errorMessage = errorMessage {
                 return errorMessage
             }
 
+            let dayText: String
+            if dayBefore == 0 {
+                dayText = "오늘"
+            } else if dayBefore == 1 {
+                dayText = "내일"
+            } else {
+                dayText = "\(dayBefore)일 뒤"
+            }
+
             switch times {
             case (.none, _):
-                return "언제 근무를 시작하시나요?"
+                return "\(dayText) 언제 근무를 시작하시나요?"
             case (.some, .none):
-                return "언제 근무를 종료하시나요?"
+                return "\(dayText) 언제 근무를 종료하시나요?"
             case (.some, .some):
                 return "등록 중..."
             }
@@ -75,7 +87,8 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
             shouldDismiss: false,
             errorMessage: nil,
             times: (nil, nil),
-            buttons: []
+            buttons: [],
+            dayBefore: payload.dayBefore
         )
         self.action.onNext(.selectTimes(nil, nil))
     }
@@ -115,14 +128,14 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
             let setButtons: Observable<Mutation> = {
                 switch (beginTime, endTime) {
                 case (.none, _):
-                    let notifiedBefore = self.dependency.preference.notifiedBefore ?? 0
+                    let dayBefore = self.currentState.dayBefore
                     let buttons: [Button]
-                    if notifiedBefore == 0 {
+                    if dayBefore == 0 {
                         let base = type(of: self).normalize(date: Date())
                         buttons = type(of: self).makeBeginButtonsFromNow(base: base)
                     } else {
                         let calendar = Calendar.current
-                        let targetDay = calendar.date(byAdding: .day, value: notifiedBefore, to: Date()) ?? Date()
+                        let targetDay = calendar.date(byAdding: .day, value: dayBefore, to: Date()) ?? Date()
                         buttons = type(of: self).makeBeginButtonsForFuture(targetDay: targetDay)
                     }
                     return .just(.setButtons(buttons))

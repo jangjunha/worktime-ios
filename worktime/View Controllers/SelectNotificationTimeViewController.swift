@@ -241,7 +241,8 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
                         self.notificationService.registerNotification(
                             identifier: weekday.notificationIdentifier,
                             dateMatching: components,
-                            repeats: true
+                            repeats: true,
+                            presentingViewController: self
                         ) { error in
                             guard error == nil else {
                                 let alertController = UIAlertController(

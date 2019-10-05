@@ -303,7 +303,8 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     self.notificationService.registerNotification(
                         identifier: UUID().uuidString,
                         dateMatching: components,
-                        repeats: false
+                        repeats: false,
+                        presentingViewController: self
                     ) { error in
                         guard error == nil else {
                             let alertController = UIAlertController(

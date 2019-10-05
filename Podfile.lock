@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.0-beta.7)
+  - Alamofire (5.0.0-rc.2)
   - AppAuth (1.2.0):
     - AppAuth/Core (= 1.2.0)
     - AppAuth/ExternalUserAgent (= 1.2.0)
@@ -20,14 +20,14 @@ PODS:
   - GTMSessionFetcher/Full (1.2.2):
     - GTMSessionFetcher/Core (= 1.2.2)
   - KeychainAccess (3.2.0)
-  - Moya/Core (14.0.0-alpha.2):
-    - Alamofire (= 5.0.0-beta.7)
-  - Moya/RxSwift (14.0.0-alpha.2):
+  - Moya/Core (14.0.0-beta.3):
+    - Alamofire (= 5.0.0-rc.2)
+  - Moya/RxSwift (14.0.0-beta.3):
     - Moya/Core
     - RxSwift (~> 5.0)
-  - Pure (1.1.0):
-    - Pure/Core (= 1.1.0)
-  - Pure/Core (1.1.0)
+  - Pure (1.1.1):
+    - Pure/Core (= 1.1.1)
+  - Pure/Core (1.1.1)
   - ReactorKit (2.0.1):
     - RxSwift (~> 5.0)
   - RxCocoa (5.0.0):
@@ -43,27 +43,27 @@ PODS:
   - RxRelay (5.0.0):
     - RxSwift (~> 5)
   - RxSwift (5.0.0)
-  - RxSwiftExt (5.0.0):
-    - RxSwiftExt/Core (= 5.0.0)
-    - RxSwiftExt/RxCocoa (= 5.0.0)
-  - RxSwiftExt/Core (5.0.0):
+  - RxSwiftExt (5.1.1):
+    - RxSwiftExt/Core (= 5.1.1)
+    - RxSwiftExt/RxCocoa (= 5.1.1)
+  - RxSwiftExt/Core (5.1.1):
     - RxSwift (~> 5.0)
-  - RxSwiftExt/RxCocoa (5.0.0):
+  - RxSwiftExt/RxCocoa (5.1.1):
     - RxCocoa (~> 5.0)
     - RxSwiftExt/Core
   - RxViewController (1.0.0):
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
-  - SnapKit (5.0.0)
+  - SnapKit (5.0.1)
   - SwiftLint (0.35.0)
-  - Then (2.4.0)
+  - Then (2.6.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.0.0-beta.7)
+  - Alamofire (~> 5.0.0-rc.2)
   - Carte
   - GoogleSignIn
   - KeychainAccess (~> 3.2.0)
-  - Moya/RxSwift (~> 14.0.0-alpha.2)
+  - Moya/RxSwift (~> 14.0.0-beta.3)
   - Pure
   - ReactorKit
   - RxCocoa (~> 5.0)
@@ -101,7 +101,7 @@ SPEC REPOS:
     - Then
 
 SPEC CHECKSUMS:
-  Alamofire: bd07938ceecad59d2492aeecb1f785a8f2721160
+  Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
   AppAuth: bce82c76043657c99d91e7882e8a9e1a93650cd4
   Carte: bca44c5112fac5866c2fa3da9fa018fa54eb8ba7
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
@@ -109,20 +109,20 @@ SPEC CHECKSUMS:
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  Moya: a6f1894cf6baec301aa02b0ecf10e5d8ade556ae
-  Pure: 45ef8de7c9d923f971c5656583bc6f108699b1fd
+  Moya: 1741bc26d2a3ad30f0410750868c7661fdd3b180
+  Pure: 357b42547feb653dd88d47ac7c8248bf84afaaad
   ReactorKit: a63c5e11e0fd32d59d672e54178b0ed2876b764b
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
-  RxSwiftExt: 4564187392cc53823ef241fa4a11647861567026
+  RxSwiftExt: 0d2fd77523a169d1459be34961b996a194bdef0e
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
-  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
-  Then: 71866660c7af35a7343831f7668e7cd2b62ee0f2
+  Then: 90cd104fd951cec1980a03f57704ad8f784d4d79
 
-PODFILE CHECKSUM: 8c514a492226088fe1e7f4d575cb5d54ffc4f347
+PODFILE CHECKSUM: d04a3dfea0c0ab2cdae152466abbd635d9ca3b61
 
 COCOAPODS: 1.7.5

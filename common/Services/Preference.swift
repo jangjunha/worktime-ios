@@ -49,6 +49,8 @@ class Preference {
         }
     }
 
+    var dateSeparatorHour = 16
+
     fileprivate let googleUserUpdated = BehaviorSubject(value: ())
     var googleUser: GoogleUser? {
         get {
