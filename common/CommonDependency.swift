@@ -77,7 +77,8 @@ extension CommonDependency {
         let userNotificationCenter = UNUserNotificationCenter.current()
         let notificationService = NotificationService(
             userNotificationCenter: userNotificationCenter,
-            preference: preference
+            preference: preference,
+            setUITests: true
         )
 
         let googleClientID = "MOCK-CLIENT-ID"
