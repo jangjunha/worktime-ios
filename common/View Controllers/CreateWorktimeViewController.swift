@@ -105,8 +105,8 @@ class CreateWorktimeViewController: BaseViewController, View, FactoryModule {
         }
 
         self.stackView.snp.makeConstraints { make in
-            make.top.greaterThanOrEqualTo(self.titleLabel.snp.bottom).offset(Metric.titleBottomMargin)
-            make.bottom.equalTo(self.view.snp.bottomMargin)
+            make.top.equalTo(self.titleLabel.snp.bottom).offset(Metric.titleBottomMargin)
+            make.bottom.lessThanOrEqualTo(self.view.snp.bottomMargin)
             make.leading.equalTo(self.view.snp.leadingMargin)
             make.trailing.equalTo(self.view.snp.trailingMargin)
         }
