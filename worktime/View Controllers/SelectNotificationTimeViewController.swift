@@ -18,6 +18,7 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
         let preference: Preference
         let userNotificationCenter: UNUserNotificationCenter
         let notificationService: NotificationService
+        let timeService: TimeServiceType
     }
 
     struct Payload {}
@@ -91,6 +92,7 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
     let preference: Preference
     let userNotificationCenter: UNUserNotificationCenter
     let notificationService: NotificationService
+    let timeService: TimeServiceType
 
 
     // MARK: UI
@@ -123,6 +125,7 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
         self.preference = dependency.preference
         self.userNotificationCenter = dependency.userNotificationCenter
         self.notificationService = dependency.notificationService
+        self.timeService = dependency.timeService
 
         super.init()
 
@@ -168,7 +171,13 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
         self.preference
             .rx.scheduledNotificationTime
             .map { $0 ?? Constant.defaultTime }
-            .map { type(of: self).convertToDate(from: $0) }
+            .map { [weak self] time -> Date in
+                guard let `self` = self else {
+                    throw NSError()
+                }
+                let now = self.timeService.now()
+                return type(of: self).convertToDate(from: time, base: now)
+            }
             .bind(to: self.datePicker.rx.value)
             .disposed(by: self.disposeBag)
 
@@ -300,13 +309,13 @@ class SelectNotificationTimeViewController: BaseViewController, FactoryModule {
 
     // MARK: Utils
 
-    static func convertToDate(from time: Int) -> Date {
+    static func convertToDate(from time: Int, base: Date) -> Date {
         return Calendar.current.date(
             bySettingHour: Int(time / 60),
             minute: time % 60,
             second: 0,
-            of: Date()
-        ) ?? Date()
+            of: base
+        ) ?? base
     }
 
     static func convertToTime(from date: Date) -> Int {

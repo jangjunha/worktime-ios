@@ -45,7 +45,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
 
         let dayBefore: Int = {
             let now = common.timeService.now()
-            let hour = calendar.dateComponents([.hour], from: Date()).hour ?? 0
+            let calendar = Calendar.current
+            let hour = calendar.dateComponents([.hour], from: now).hour ?? 0
             return hour <= common.preference.dateSeparatorHour ? 0 : 1
         }()
         self.title = Constant.buildTitle(dayBefore)

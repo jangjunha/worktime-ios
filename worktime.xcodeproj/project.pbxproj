@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		311805B480B137FBA2E3BD79 /* Pods_worktime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341C8949A343ADCCFDA17F39 /* Pods_worktime.framework */; };
+		3C15E1332393CA91008DFFD2 /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C15E1322393CA91008DFFD2 /* TimeService.swift */; };
+		3C15E1342393CC44008DFFD2 /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C15E1322393CA91008DFFD2 /* TimeService.swift */; };
 		3C8CCAF0239387060061E538 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8CCAED239387060061E538 /* BaseViewController.swift */; };
 		3C8CCAF1239387060061E538 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8CCAED239387060061E538 /* BaseViewController.swift */; };
 		3C8CCAF2239387060061E538 /* CreateWorktimeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8CCAEE239387060061E538 /* CreateWorktimeViewReactor.swift */; };
@@ -86,6 +88,7 @@
 /* Begin PBXFileReference section */
 		2091A9538693E6A50F68CE9F /* Pods-worktime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-worktime.release.xcconfig"; path = "Target Support Files/Pods-worktime/Pods-worktime.release.xcconfig"; sourceTree = "<group>"; };
 		341C8949A343ADCCFDA17F39 /* Pods_worktime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_worktime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C15E1322393CA91008DFFD2 /* TimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeService.swift; sourceTree = "<group>"; };
 		3C8CCAED239387060061E538 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		3C8CCAEE239387060061E538 /* CreateWorktimeViewReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWorktimeViewReactor.swift; sourceTree = "<group>"; };
 		3C8CCAEF239387060061E538 /* CreateWorktimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateWorktimeViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +231,7 @@
 				3C9E09E323213BFC00DBC21A /* Preference.swift */,
 				3CC216BF2324DCF900C21A3F /* GoogleLoginServiceType.swift */,
 				3CC2167C2324408700C21A3F /* NotificationService.swift */,
+				3C15E1322393CA91008DFFD2 /* TimeService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -643,6 +647,7 @@
 			files = (
 				3CC216BC2324DC2300C21A3F /* StubAppDependencyResolver.swift in Sources */,
 				3CE9E5992322C7A8003EC279 /* SelectNotificationTimeViewController.swift in Sources */,
+				3C15E1332393CA91008DFFD2 /* TimeService.swift in Sources */,
 				3C97102B232162D600C0A2D8 /* DateExtension.swift in Sources */,
 				3C9E09E9232143D000DBC21A /* GoogleAPI.swift in Sources */,
 				3C9E09E7232141DC00DBC21A /* SelectCalendarViewController.swift in Sources */,
@@ -669,6 +674,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C15E1342393CC44008DFFD2 /* TimeService.swift in Sources */,
 				3CC2167E2324421700C21A3F /* NotificationService.swift in Sources */,
 				3C9E09EC2321452E00DBC21A /* StringExtension.swift in Sources */,
 				3C8CCAF1239387060061E538 /* BaseViewController.swift in Sources */,

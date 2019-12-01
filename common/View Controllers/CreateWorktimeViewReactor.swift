@@ -17,6 +17,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
 
     struct Dependency {
         let preference: Preference
+        let timeService: TimeServiceType
         let userNotificationCenter: UNUserNotificationCenter
         let googleProvider: GoogleProvider
         let googleClientID: String
@@ -105,13 +106,21 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                     refreshToken: googleUser.refreshToken
                 ))
                 .map(Token.self)
-                .map { token in GoogleUser(
-                    accessToken: token.accessToken,
-                    accessTokenExpirationDate: Date().addingTimeInterval(TimeInterval(token.expiresIn)),
-                    refreshToken: googleUser.refreshToken,
-                    email: googleUser.email,
-                    name: googleUser.name
-                ) }
+                .map { [weak self] token -> GoogleUser in
+                    guard let `self` = self else {
+                        throw NSError()
+                    }
+                    let now = self.dependency.timeService.now()
+                    return .init(
+                        accessToken: token.accessToken,
+                        accessTokenExpirationDate: now.addingTimeInterval(
+                            TimeInterval(token.expiresIn)
+                        ),
+                        refreshToken: googleUser.refreshToken,
+                        email: googleUser.email,
+                        name: googleUser.name
+                    )
+                }
                 .do(onSuccess: { [weak self] user in
                     guard let `self` = self else {
                         return
@@ -131,11 +140,12 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                     let dayBefore = self.currentState.dayBefore
                     let buttons: [Button]
                     if dayBefore == 0 {
-                        let base = type(of: self).normalize(date: Date())
+                        let base = type(of: self).normalize(date: self.dependency.timeService.now())
                         buttons = type(of: self).makeBeginButtonsFromNow(base: base)
                     } else {
+                        let now = self.dependency.timeService.now()
                         let calendar = Calendar.current
-                        let targetDay = calendar.date(byAdding: .day, value: dayBefore, to: Date()) ?? Date()
+                        let targetDay = calendar.date(byAdding: .day, value: dayBefore, to: now) ?? now
                         buttons = type(of: self).makeBeginButtonsForFuture(targetDay: targetDay)
                     }
                     return .just(.setButtons(buttons))

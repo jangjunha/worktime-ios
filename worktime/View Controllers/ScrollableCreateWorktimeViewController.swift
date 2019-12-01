@@ -12,6 +12,7 @@ import UIKit
 class ScrollableCreateWorktimeViewController: BaseViewController, FactoryModule {
     struct Dependency {
         let preference: Preference
+        let timeService: TimeServiceType
         let createWorktimeViewControllerFactory: CreateWorktimeViewController.Factory
         let createWorktimeViewReactorFactory: CreateWorktimeViewReactor.Factory
     }
@@ -45,12 +46,14 @@ class ScrollableCreateWorktimeViewController: BaseViewController, FactoryModule 
     // MARK: Properties
 
     lazy var dayBefore: Int = {
+        let now = self.timeService.now()
         let calendar = Calendar.current
-        let hour = calendar.dateComponents([.hour], from: Date()).hour ?? 0
+        let hour = calendar.dateComponents([.hour], from: now).hour ?? 0
         return hour <= self.preference.dateSeparatorHour ? 0 : 1
     }()
 
     let preference: Preference
+    let timeService: TimeServiceType
 
     let createWorktimeViewControllerFactory: CreateWorktimeViewController.Factory
     let createWorktimeViewReactorFactory: CreateWorktimeViewReactor.Factory
@@ -60,6 +63,7 @@ class ScrollableCreateWorktimeViewController: BaseViewController, FactoryModule 
 
     required init(dependency: Dependency, payload: Payload) {
         self.preference = dependency.preference
+        self.timeService = dependency.timeService
         self.createWorktimeViewControllerFactory = dependency.createWorktimeViewControllerFactory
         self.createWorktimeViewReactorFactory = dependency.createWorktimeViewReactorFactory
 
