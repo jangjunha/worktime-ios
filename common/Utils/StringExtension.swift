@@ -18,3 +18,16 @@ extension String {
         return data(using: .utf8)!
     }
 }
+
+extension Collection where Iterator.Element: NSAttributedString {
+    func joined(separator: String? = nil) -> NSAttributedString {
+        let str = NSMutableAttributedString()
+        self.enumerated().forEach { offset, element in
+            if let separator = separator, offset > 0 {
+                str.append(.init(string: separator))
+            }
+            str.append(element)
+        }
+        return str
+    }
+}

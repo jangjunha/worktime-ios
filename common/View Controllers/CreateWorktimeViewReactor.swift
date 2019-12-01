@@ -230,14 +230,23 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         )]
         let intervals: [TimeInterval] = [
             0,
+            5 * 60,
             10 * 60,
             15 * 60,
             20 * 60,
-            30 * 60
+            25 * 60,
+            30 * 60,
+            35 * 60,
+            40 * 60,
+            45 * 60,
+            50 * 60,
+            55 * 60,
+            60 * 60
         ]
         let futures: [Button] = intervals
             .map(base.addingTimeInterval)
             .map { (beginDate: $0, endDate: nil, style: .normal) }
+            .filter { !strict.map { $0.beginDate }.contains($0.beginDate) }
         return strict + futures
     }
 
@@ -245,6 +254,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         let calendar = Calendar.current
         return [
             (9, 0, false),
+            (9, 30, false),
             (10, 0, true),
             (10, 30, false),
             (11, 0, false),
@@ -273,6 +283,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         let normals: [Button] = intervals
             .map(beginDate.addingTimeInterval)
             .map { (beginDate: beginDate, endDate: $0, style: .normal) }
+            .filter { !strict.map { $0.endDate }.contains($0.endDate) }
         return strict + normals
     }
 }
