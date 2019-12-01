@@ -18,6 +18,7 @@ typealias GoogleProvider = MoyaProvider<GoogleAPI>
 struct CommonDependency {
     let userNotificationCenter: UNUserNotificationCenter
     let notificationService: NotificationService
+    let timeService: TimeServiceType
     let preference: Preference
 
     let googleClientID: String
@@ -39,6 +40,7 @@ extension CommonDependency {
             userNotificationCenter: userNotificationCenter,
             preference: preference
         )
+        let timeService = TimeService()
 
         let googleClientID = "1066855526531-mpbptb2kmdhkclq4sula8r1rofn2dakl.apps.googleusercontent.com"
         let googleProvider = GoogleProvider(plugins: [
@@ -50,6 +52,7 @@ extension CommonDependency {
         let createWorktimeViewControllerFactory = CreateWorktimeViewController.Factory(dependency: .init())
         let createWorktimeViewReactorFactory = CreateWorktimeViewReactor.Factory(dependency: .init(
             preference: preference,
+            timeService: timeService,
             userNotificationCenter: userNotificationCenter,
             googleProvider: googleProvider,
             googleClientID: googleClientID
@@ -58,6 +61,7 @@ extension CommonDependency {
         return CommonDependency(
             userNotificationCenter: userNotificationCenter,
             notificationService: notificationService,
+            timeService: timeService,
             preference: preference,
             googleClientID: googleClientID,
             googleProvider: googleProvider,
@@ -77,8 +81,11 @@ extension CommonDependency {
         let userNotificationCenter = UNUserNotificationCenter.current()
         let notificationService = NotificationService(
             userNotificationCenter: userNotificationCenter,
-            preference: preference
+            preference: preference,
+            setUITests: true
         )
+        let mockTimeService = MockTimeService()
+        mockTimeService._now = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: Date())!
 
         let googleClientID = "MOCK-CLIENT-ID"
         let stubGoogleProvider = GoogleProvider(stubClosure: MoyaProvider.immediatelyStub)
@@ -86,6 +93,7 @@ extension CommonDependency {
         let createWorktimeViewControllerFactory = CreateWorktimeViewController.Factory(dependency: .init())
         let createWorktimeViewReactorFactory = CreateWorktimeViewReactor.Factory(dependency: .init(
             preference: preference,
+            timeService: mockTimeService,
             userNotificationCenter: userNotificationCenter,
             googleProvider: stubGoogleProvider,
             googleClientID: googleClientID
@@ -94,6 +102,7 @@ extension CommonDependency {
         return CommonDependency(
             userNotificationCenter: userNotificationCenter,
             notificationService: notificationService,
+            timeService: mockTimeService,
             preference: preference,
             googleClientID: googleClientID,
             googleProvider: stubGoogleProvider,

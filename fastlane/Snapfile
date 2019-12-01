@@ -5,8 +5,8 @@ devices([
   "iPhone SE",
   "iPhone 8",
   "iPhone 8 Plus",
-  "iPhone Xs",  # "iPhone X",
-  "iPhone Xs Max",
+  "iPhone 11 Pro",  # "iPhone X",
+  "iPhone 11",
   "iPad Pro (12.9-inch) (3rd generation)",
   "iPad Pro (12.9-inch) (2nd generation)"
 ])

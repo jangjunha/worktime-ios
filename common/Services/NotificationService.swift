@@ -32,10 +32,13 @@ class NotificationService {
 
     let preference: Preference
 
+    let setUITests: Bool
 
-    init(userNotificationCenter: UNUserNotificationCenter, preference: Preference) {
+
+    init(userNotificationCenter: UNUserNotificationCenter, preference: Preference, setUITests: Bool = false) {
         self.userNotificationCenter = userNotificationCenter
         self.preference = preference
+        self.setUITests = setUITests
     }
 
     func registerNotification(
@@ -50,6 +53,7 @@ class NotificationService {
             content: UNMutableNotificationContent().then {
                 $0.categoryIdentifier = Constant.categoryIdentifier
                 $0.body = Constant.buildNotificationBody(self.preference.notifiedBefore ?? 0)
+                $0.userInfo = self.setUITests ? ["-UITests": true] : [:]
             },
             trigger: UNCalendarNotificationTrigger(
                 dateMatching: dateComponents,

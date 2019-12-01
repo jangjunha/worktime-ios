@@ -31,55 +31,43 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     }
 
 
-    // MARK: UI
-
-    lazy var createWorktimeViewController: CreateWorktimeViewController = {
-        let viewController = self.common.createWorktimeViewControllerFactory.create(payload: .init(
-            reactor: self.common.createWorktimeViewReactorFactory.create(payload: .init(
-                dayBefore: self.dayBefore
-            ))
-        ))
-        viewController.delegate = self
-        return viewController
-    }()
-
-
-    // MARK: Properties
-
-    lazy var dayBefore: Int = {
-        let calendar = Calendar.current
-        let hour = calendar.dateComponents([.hour], from: Date()).hour ?? 0
-        return hour <= self.common.preference.dateSeparatorHour ? 0 : 1
-    }()
-
-    let common = CommonDependency.resolve()
-
-
-    // MARK: View Life Cycle
-
-    override func loadView() {
-        self.view = UIView()
-        self.view.addSubview(self.createWorktimeViewController.view)
-    }
-
-
-    // MARK: View Life Cycle
-
-    override func viewDidLoad() {
-        self.createWorktimeViewController.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
-        self.addChild(self.createWorktimeViewController)
-        self.createWorktimeViewController.didMove(toParent: self)
-    }
-
-
     // MARK: UNNotificationContentExtension
 
     func didReceive(_ notification: UNNotification) {
-        self.title = Constant.buildTitle(self.dayBefore)
-        self.createWorktimeViewController.notificationIdentifier = notification.request.identifier
+        let isUITests = notification.request.content.userInfo["-UITests"] as? Bool
+
+        let common: CommonDependency
+        if isUITests == true {
+            common = .resolveForUITests()
+        } else {
+            common = .resolve()
+        }
+
+        let dayBefore: Int = {
+            let now = common.timeService.now()
+            let calendar = Calendar.current
+            let hour = calendar.dateComponents([.hour], from: now).hour ?? 0
+            return hour <= common.preference.dateSeparatorHour ? 0 : 1
+        }()
+        self.title = Constant.buildTitle(dayBefore)
+
+        let createWorktimeViewController: CreateWorktimeViewController = {
+            let viewController = common.createWorktimeViewControllerFactory.create(payload: .init(
+                reactor: common.createWorktimeViewReactorFactory.create(payload: .init(
+                    dayBefore: dayBefore
+                ))
+            ))
+            viewController.delegate = self
+            viewController.notificationIdentifier = notification.request.identifier
+            return viewController
+        }()
+        self.view.addSubview(createWorktimeViewController.view)
+        createWorktimeViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        self.addChild(createWorktimeViewController)
+        createWorktimeViewController.didMove(toParent: self)
     }
 }
 
