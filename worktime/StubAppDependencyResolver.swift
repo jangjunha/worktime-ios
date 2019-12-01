@@ -64,6 +64,13 @@ extension AppDependency {
             selectCalendarViewControllerFactory: selectCalendarViewControllerFactory,
             selectNotificationTimeViewControllerFactory: selectNotificationTimeViewControllerFactory
         ))
+        let scrollableCreateWorktimeViewControllerFactory = ScrollableCreateWorktimeViewController.Factory(
+            dependency: .init(
+                preference: common.preference,
+                createWorktimeViewControllerFactory: common.createWorktimeViewControllerFactory,
+                createWorktimeViewReactorFactory: common.createWorktimeViewReactorFactory
+            )
+        )
 
         return AppDependency(
             userNotificationCenter: common.userNotificationCenter,
@@ -73,8 +80,7 @@ extension AppDependency {
             googleLoginService: stubGoogleLoginService,
             settingsViewControllerFactory: settingsViewControllerFactory,
             selectCalendarViewControllerFactory: selectCalendarViewControllerFactory,
-            createWorktimeViewControllerFactory: common.createWorktimeViewControllerFactory,
-            createWorktimeViewReactorFactory: common.createWorktimeViewReactorFactory
+            scrollableCreateWorktimeViewControllerFactory: scrollableCreateWorktimeViewControllerFactory
         )
     }
 }
