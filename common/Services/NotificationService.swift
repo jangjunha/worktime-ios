@@ -72,7 +72,9 @@ class NotificationService {
                     title: "닫기",
                     style: .default
                 ))
-                presentingViewController?.present(alertController, animated: true)
+                DispatchQueue.main.async {
+                    presentingViewController?.present(alertController, animated: true)
+                }
                 return
             }
 
