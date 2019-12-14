@@ -71,11 +71,7 @@ class worktimeUITests: XCTestCase {
         app.navigationBars.buttons.element(boundBy: 0).tap()  // back
 
         self.waitForElementToAppear(element: logoutButton)
-        if #available(iOS 13, *) {
-            springboard.statusBars.firstMatch.tap()
-        } else {
-            app.statusBars.firstMatch.tap()
-        }
+        app.tables.firstMatch.swipeDown()
         precondition(eventTitleField.value as? String == "junha")
         sleep(2)
         snapshot("00-Settings")

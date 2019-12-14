@@ -17,6 +17,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
 
     struct Dependency {
         let preference: Preference
+        let timeService: TimeServiceType
         let userNotificationCenter: UNUserNotificationCenter
         let googleProvider: GoogleProvider
         let googleClientID: String
@@ -105,13 +106,21 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                     refreshToken: googleUser.refreshToken
                 ))
                 .map(Token.self)
-                .map { token in GoogleUser(
-                    accessToken: token.accessToken,
-                    accessTokenExpirationDate: Date().addingTimeInterval(TimeInterval(token.expiresIn)),
-                    refreshToken: googleUser.refreshToken,
-                    email: googleUser.email,
-                    name: googleUser.name
-                ) }
+                .map { [weak self] token -> GoogleUser in
+                    guard let `self` = self else {
+                        throw NSError()
+                    }
+                    let now = self.dependency.timeService.now()
+                    return .init(
+                        accessToken: token.accessToken,
+                        accessTokenExpirationDate: now.addingTimeInterval(
+                            TimeInterval(token.expiresIn)
+                        ),
+                        refreshToken: googleUser.refreshToken,
+                        email: googleUser.email,
+                        name: googleUser.name
+                    )
+                }
                 .do(onSuccess: { [weak self] user in
                     guard let `self` = self else {
                         return
@@ -131,11 +140,12 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
                     let dayBefore = self.currentState.dayBefore
                     let buttons: [Button]
                     if dayBefore == 0 {
-                        let base = type(of: self).normalize(date: Date())
+                        let base = type(of: self).normalize(date: self.dependency.timeService.now())
                         buttons = type(of: self).makeBeginButtonsFromNow(base: base)
                     } else {
+                        let now = self.dependency.timeService.now()
                         let calendar = Calendar.current
-                        let targetDay = calendar.date(byAdding: .day, value: dayBefore, to: Date()) ?? Date()
+                        let targetDay = calendar.date(byAdding: .day, value: dayBefore, to: now) ?? now
                         buttons = type(of: self).makeBeginButtonsForFuture(targetDay: targetDay)
                     }
                     return .just(.setButtons(buttons))
@@ -230,14 +240,23 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         )]
         let intervals: [TimeInterval] = [
             0,
+            5 * 60,
             10 * 60,
             15 * 60,
             20 * 60,
-            30 * 60
+            25 * 60,
+            30 * 60,
+            35 * 60,
+            40 * 60,
+            45 * 60,
+            50 * 60,
+            55 * 60,
+            60 * 60
         ]
         let futures: [Button] = intervals
             .map(base.addingTimeInterval)
             .map { (beginDate: $0, endDate: nil, style: .normal) }
+            .filter { !strict.map { $0.beginDate }.contains($0.beginDate) }
         return strict + futures
     }
 
@@ -245,6 +264,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         let calendar = Calendar.current
         return [
             (9, 0, false),
+            (9, 30, false),
             (10, 0, true),
             (10, 30, false),
             (11, 0, false),
@@ -273,6 +293,7 @@ class CreateWorktimeViewReactor: Reactor, FactoryModule {
         let normals: [Button] = intervals
             .map(beginDate.addingTimeInterval)
             .map { (beginDate: beginDate, endDate: $0, style: .normal) }
+            .filter { !strict.map { $0.endDate }.contains($0.endDate) }
         return strict + normals
     }
 }

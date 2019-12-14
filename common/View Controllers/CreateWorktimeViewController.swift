@@ -47,6 +47,28 @@ class CreateWorktimeViewController: BaseViewController, View, FactoryModule {
         static let titleLightHighlighted = Color.buttonBackground.darken(by: 0.1)
     }
 
+    enum Attribute {
+        static let title = { (
+            baseColor: UIColor,
+            mute: Bool,
+            highlight: Bool
+        ) -> [NSAttributedString.Key: Any] in
+            let alpha: CGFloat = {
+                var val: CGFloat = 1.0
+                if mute {
+                    val *= 0.5
+                }
+                if highlight {
+                    val *= 0.3
+                }
+                return val
+            }()
+            return [
+                .foregroundColor: baseColor.withAlphaComponent(alpha)
+            ]
+        }
+    }
+
 
     // MARK: UI
 
@@ -105,8 +127,8 @@ class CreateWorktimeViewController: BaseViewController, View, FactoryModule {
         }
 
         self.stackView.snp.makeConstraints { make in
-            make.top.greaterThanOrEqualTo(self.titleLabel.snp.bottom).offset(Metric.titleBottomMargin)
-            make.bottom.equalTo(self.view.snp.bottomMargin)
+            make.top.equalTo(self.titleLabel.snp.bottom).offset(Metric.titleBottomMargin)
+            make.bottom.lessThanOrEqualTo(self.view.snp.bottomMargin)
             make.leading.equalTo(self.view.snp.leadingMargin)
             make.trailing.equalTo(self.view.snp.trailingMargin)
         }
@@ -186,22 +208,34 @@ class CreateWorktimeViewController: BaseViewController, View, FactoryModule {
             return String(format: "%d:%02d", hour, minute)
         }
 
-        let title: String
+        let makeTitle: (Bool) -> NSAttributedString
         if let endTime = endTime {
             let deltaComps = Calendar.current.dateComponents([.hour, .minute], from: beginTime, to: endTime)
             let delta = { hour, minute in
                 return minute == 0 ? "\(hour)시간" : "\(hour)시간 \(minute)분"
             }(deltaComps.hour ?? 0, deltaComps.minute ?? 0)
-            title = "\(formatTime(beginTime)) - \(formatTime(endTime)) (\(delta))"
+            makeTitle = { highlight in [
+                NSAttributedString(
+                    string: "\(formatTime(beginTime)) - ",
+                    attributes: Attribute.title(style.titleColor, true, highlight)
+                ),
+                NSAttributedString(
+                    string: "\(formatTime(endTime)) (\(delta))",
+                    attributes: Attribute.title(style.titleColor, false, highlight)
+                )
+            ].joined() }
+
         } else {
-            title = formatTime(beginTime)
+            makeTitle = { highlight in .init(
+                string: formatTime(beginTime),
+                attributes: Attribute.title(style.titleColor, false, highlight)
+            ) }
         }
 
         let button = UIButton(type: .custom).then {
-            $0.setTitle(title, for: .normal)
+            $0.setAttributedTitle(makeTitle(false), for: .normal)
+            $0.setAttributedTitle(makeTitle(true), for: .highlighted)
             $0.backgroundColor = style.backgroundColor
-            $0.setTitleColor(style.titleColor, for: .normal)
-            $0.setTitleColor(style.highlightedTitleColor, for: .highlighted)
             $0.contentEdgeInsets = Metric.buttonContentEdgeInsets
             $0.layer.cornerRadius = Metric.buttonCornerRadius
             $0.layer.borderWidth = style.borderWidth

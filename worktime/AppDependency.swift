@@ -20,6 +20,5 @@ struct AppDependency {
 
     let settingsViewControllerFactory: SettingsViewController.Factory
     let selectCalendarViewControllerFactory: SelectCalendarViewController.Factory
-    let createWorktimeViewControllerFactory: CreateWorktimeViewController.Factory
-    let createWorktimeViewReactorFactory: CreateWorktimeViewReactor.Factory
+    let scrollableCreateWorktimeViewControllerFactory: ScrollableCreateWorktimeViewController.Factory
 }

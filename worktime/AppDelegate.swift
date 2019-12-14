@@ -89,22 +89,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         switch response.notification.request.content.categoryIdentifier {
         case "worktimeAlert":
-            let closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
-            let hour = Calendar.current.dateComponents([.hour], from: Date()).hour ?? 0
-            let dayBefore = hour <= self.dependency.preference.dateSeparatorHour ? 0 : 1
-            let createWorktimeViewController = self.dependency.createWorktimeViewControllerFactory.create(
-                payload: .init(
-                    reactor: self.dependency.createWorktimeViewReactorFactory.create(payload: .init(
-                        dayBefore: dayBefore
-                    ))
-                )
-            ).then {
-                $0.navigationItem.leftBarButtonItem = closeButton
-            }
+            let createWorktimeViewController = self.dependency.scrollableCreateWorktimeViewControllerFactory.create(
+                payload: .init()
+            )
             let navigationController = UINavigationController(rootViewController: createWorktimeViewController)
-            closeButton.rx.tap.subscribe(onNext: { [weak navigationController] in
-                navigationController?.dismiss(animated: true)
-            }).disposed(by: createWorktimeViewController.disposeBag)
             topViewController.present(navigationController, animated: true)
         default:
             break

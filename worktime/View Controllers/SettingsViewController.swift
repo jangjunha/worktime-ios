@@ -361,7 +361,9 @@ class SettingsViewController: BaseViewController, FactoryModule {
                             title: "닫기",
                             style: .default
                         ))
-                        self.present(alertController, animated: true)
+                        DispatchQueue.main.async {
+                            self.present(alertController, animated: true)
+                        }
                         return
                     }
                 }

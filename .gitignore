@@ -4,6 +4,7 @@
 /*.mobileprovision
 /swiftlint.result.json
 
+fastlane/Appfile
 fastlane/metadata/
 fastlane/screenshots/
 
