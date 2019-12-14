@@ -1,5 +1,6 @@
 scheme("worktime")
 workspace("worktime.xcworkspace")
+export_xcargs("-allowProvisioningUpdates")
 
 clean(true)
 include_bitcode(true)
