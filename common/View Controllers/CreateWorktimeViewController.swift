@@ -39,8 +39,32 @@ class CreateWorktimeViewController: BaseViewController, View, FactoryModule {
 
     enum Color {
         static let buttonBackground = UIColor(red: 0x22 / 255.0, green: 0x8B / 255.0, blue: 0xE6 / 255.0, alpha: 1.0)
-        static let buttonBackgroundLight: UIColor = .white
-        static let buttonBorderLight = Color.buttonBackground
+        static var buttonBackgroundLight: UIColor {
+            guard #available(iOS 13.0, *) else {
+                return .white
+            }
+            switch UITraitCollection.current.userInterfaceStyle {
+            case .dark:
+                return UIColor.white.darken(by: 0.1)
+            case .light, .unspecified:
+                return .white
+            @unknown default:
+                return .white
+            }
+        }
+        static var buttonBorderLight: UIColor {
+            guard #available(iOS 13.0, *) else {
+                return Color.buttonBackground
+            }
+            switch UITraitCollection.current.userInterfaceStyle {
+            case .dark:
+                return Color.buttonBackground.lighten(by: 0.1)
+            case .light, .unspecified:
+                return Color.buttonBackground
+            @unknown default:
+                return Color.buttonBackground
+            }
+        }
         static let title: UIColor = .white
         static let titleHighlighted = UIColor.white.darken(by: 0.1)
         static let titleLight: UIColor = Color.buttonBackground
@@ -112,7 +136,7 @@ class CreateWorktimeViewController: BaseViewController, View, FactoryModule {
     override func loadView() {
         self.view = UIView()
         self.view.layoutMargins = Metric.margins
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.compat.systemBackground
 
         self.view.addSubview(self.titleLabel)
         self.view.addSubview(self.stackView)

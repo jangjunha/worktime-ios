@@ -29,4 +29,82 @@ extension UIColor {
             return self
         }
     }
+
+    static let compat = CompatColor()
+
+    static let labelDisabled = UIColor.compat.systemGray2
+}
+
+struct CompatColor {
+    var link: UIColor {
+        if #available(iOS 13.0, *) {
+            return .link
+        } else {
+            return .systemBlue
+        }
+    }
+
+    var label: UIColor {
+        if #available(iOS 13.0, *) {
+            return .label
+        } else {
+            return .black
+        }
+    }
+
+    var systemGray: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return .init(red: 142, green: 142, blue: 147, alpha: 1)
+        }
+    }
+
+    var systemGray2: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return .init(red: 174, green: 174, blue: 178, alpha: 1)
+        }
+    }
+
+    var systemGray3: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return .init(red: 199, green: 199, blue: 204, alpha: 1)
+        }
+    }
+
+    var systemGray4: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return .init(red: 209, green: 209, blue: 214, alpha: 1)
+        }
+    }
+
+    var systemGray5: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return .init(red: 229, green: 229, blue: 234, alpha: 1)
+        }
+    }
+
+    var systemGray6: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return .init(red: 242, green: 242, blue: 247, alpha: 1)
+        }
+    }
+
+    var systemBackground: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }
 }
