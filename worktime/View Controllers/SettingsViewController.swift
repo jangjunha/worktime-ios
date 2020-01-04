@@ -81,11 +81,10 @@ class SettingsViewController: BaseViewController, FactoryModule {
     }
     let signinCell = UITableViewCell().then {
         $0.textLabel?.text = "로그인"
-        $0.textLabel?.textColor = .blue
+        $0.textLabel?.textColor = UIColor.compat.link
     }
     let signoutCell = UITableViewCell().then {
         $0.textLabel?.text = "로그아웃"
-        $0.textLabel?.textColor = .red
     }
     let selectCalendarCell = UITableViewCell().then {
         $0.textLabel?.text = "캘린더를 선택하세요"
@@ -146,24 +145,24 @@ class SettingsViewController: BaseViewController, FactoryModule {
                     return self.signoutCell
                 case let .selectCalendar(isEnabled):
                     let cell = self.selectCalendarCell
-                    cell.textLabel?.textColor = isEnabled ? .blue : .lightGray
+                    cell.textLabel?.textColor = isEnabled ? UIColor.compat.link : UIColor.compat.label
                     cell.selectionStyle = isEnabled ? .default : .none
                     return cell
                 case let .selectedCalendar(calendarID):
                     let cell = self.selectedCalendarCell
                     cell.textLabel?.text = calendarID
                     return cell
-                case let .eventTitle:
+                case .eventTitle:
                     return self.eventTitleCell
                 case let .notification(time, notifiedBefore, isEnabled):
                     let cell = self.notificationScheduleCell
-                    cell.textLabel?.textColor = isEnabled ? .black : .lightGray
+                    cell.textLabel?.textColor = isEnabled ? UIColor.compat.label : .labelDisabled
                     cell.detailTextLabel?.text = Constant.buildNotifyTime(time, notifiedBefore)
                     cell.selectionStyle = isEnabled ? .default : .none
                     return cell
                 case let .notifyNow(isEnabled):
                     let cell = self.notifyNowCell
-                    cell.textLabel?.textColor = isEnabled ? .black : .lightGray
+                    cell.textLabel?.textColor = isEnabled ? UIColor.compat.label : .labelDisabled
                     cell.selectionStyle = isEnabled ? .default : .none
                     return cell
                 case .appInformation:
@@ -223,7 +222,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
             .disposed(by: self.disposeBag)
 
         eventTitleFieldEnabled
-            .map { $0 ? .black : .lightGray }
+            .map { $0 ? UIColor.compat.label : .labelDisabled }
             .subscribe(onNext: { [weak self] color in
                 self?.eventTitleField.textColor = color
             })
@@ -400,7 +399,7 @@ class SettingsViewController: BaseViewController, FactoryModule {
 
     override func loadView() {
         self.view = UIView()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.compat.systemBackground
         self.view.addSubview(self.tableView)
 
         self.eventTitleCell.addSubview(self.eventTitleField)
