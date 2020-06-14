@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let settingsViewController = self.dependency.settingsViewControllerFactory.create(payload: .init())
         let navigationController = UINavigationController(rootViewController: settingsViewController).then {
-            $0.view.backgroundColor = .white
+            $0.view.backgroundColor = UIColor.compat.systemBackground
         }
 
         self.window = UIWindow(frame: UIScreen.main.bounds)

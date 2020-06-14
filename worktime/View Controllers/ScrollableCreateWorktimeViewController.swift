@@ -22,9 +22,7 @@ class ScrollableCreateWorktimeViewController: BaseViewController, FactoryModule 
 
     // MARK: UI
 
-    let scrollView = UIScrollView().then {
-        $0.backgroundColor = .yellow
-    }
+    let scrollView = UIScrollView()
 
     let contentView = UIView().then {
         $0.backgroundColor = .orange
@@ -83,7 +81,7 @@ class ScrollableCreateWorktimeViewController: BaseViewController, FactoryModule 
 
     override func loadView() {
         self.view = UIView()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.compat.systemBackground
         self.view.addSubview(self.scrollView)
         self.scrollView.addSubview(self.contentView)
         self.contentView.addSubview(self.createWorktimeViewController.view)

@@ -46,7 +46,7 @@ class SelectCalendarViewController: BaseViewController, FactoryModule {
     }
 
     let loadingView = UIActivityIndicatorView(style: .whiteLarge).then {
-        $0.color = .gray
+        $0.color = UIColor.compat.systemGray
         $0.startAnimating()
     }
 
@@ -103,7 +103,7 @@ class SelectCalendarViewController: BaseViewController, FactoryModule {
 
     override func loadView() {
         self.view = UIView()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.compat.systemBackground
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.loadingView)
     }
